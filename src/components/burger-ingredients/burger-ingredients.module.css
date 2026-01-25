@@ -18,27 +18,3 @@
   max-height: 664px;
   overflow-y: auto;
 }
-
-.ingredients_block {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.ingredient {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 272px;
-}
-
-.currency {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.name {
-  height: 48px;
-  text-align: center;
-}

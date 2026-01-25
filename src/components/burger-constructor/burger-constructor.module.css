@@ -5,3 +5,8 @@
   padding-bottom: 20px;
   color: var(--text-primary-color);
 }
+
+.constructor_elements {
+  display: flex;
+  flex-direction: column;
+}
