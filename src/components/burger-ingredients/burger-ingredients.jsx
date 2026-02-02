@@ -1,15 +1,16 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-
-import IngredientList from '../ingredients-list/ingredients-list.jsx';
+import { useState } from 'react';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ ingredients }) => {
-  console.log(ingredients);
+export const BurgerIngredients = ({ children, mainRef, bunRef, sauceRef }) => {
+  const [bunActive, setBunActive] = useState(true);
+  const [sauceActive, setSauceActive] = useState(false);
+  const [mainActive, setMainActive] = useState(false);
 
-  const buns = ingredients.filter((ingredient) => ingredient.type === 'bun');
-  const sauces = ingredients.filter((ingredient) => ingredient.type === 'sauce');
-  const mains = ingredients.filter((ingredient) => ingredient.type === 'main');
+  function handleScroll(elementRef) {
+    elementRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 
   return (
     <section className={styles.burger_ingredients}>
@@ -17,27 +18,36 @@ export const BurgerIngredients = ({ ingredients }) => {
         <ul className={styles.menu}>
           <Tab
             value="bun"
-            active={true}
+            active={bunActive}
             onClick={() => {
-              /* TODO */
+              handleScroll(bunRef);
+              setBunActive(true);
+              setMainActive(false);
+              setSauceActive(false);
             }}
           >
             Булки
           </Tab>
           <Tab
             value="main"
-            active={false}
+            active={mainActive}
             onClick={() => {
-              /* TODO */
+              handleScroll(mainRef);
+              setMainActive(true);
+              setSauceActive(false);
+              setBunActive(false);
             }}
           >
             Начинки
           </Tab>
           <Tab
             value="sauce"
-            active={false}
+            active={sauceActive}
             onClick={() => {
-              /* TODO */
+              handleScroll(sauceRef);
+              setSauceActive(true);
+              setMainActive(false);
+              setBunActive(false);
             }}
           >
             Соусы
@@ -45,11 +55,7 @@ export const BurgerIngredients = ({ ingredients }) => {
         </ul>
       </nav>
 
-      <div className={`${styles.positions} mt-10 custom-scroll`}>
-        <IngredientList name="Булки" ingredients={buns} />
-        <IngredientList name="Соусы" ingredients={sauces} />
-        <IngredientList name="Начинки" ingredients={mains} />
-      </div>
+      <div className={`${styles.ingredients} mt-10 custom-scroll`}>{children}</div>
     </section>
   );
 };

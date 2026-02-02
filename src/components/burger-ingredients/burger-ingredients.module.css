@@ -14,7 +14,133 @@
   list-style-type: none;
 }
 
-.positions {
-  max-height: 664px;
+.ingredients {
+  max-height: 580px;
   overflow-y: auto;
+}
+
+@media (height >= 480px) {
+  .ingredients {
+    max-height: 190px;
+  }
+}
+
+@media (height >= 520px) {
+  .ingredients {
+    max-height: 220px;
+  }
+}
+
+@media (height >= 560px) {
+  .ingredients {
+    max-height: 270px;
+  }
+}
+
+@media (height >= 600px) {
+  .ingredients {
+    max-height: 310px;
+  }
+}
+
+@media (height >= 640px) {
+  .ingredients {
+    max-height: 350px;
+  }
+}
+
+@media (height >= 680px) {
+  .ingredients {
+    max-height: 390px;
+  }
+}
+
+@media (height >= 720px) {
+  .ingredients {
+    max-height: 430px;
+  }
+}
+
+@media (height >= 760px) {
+  .ingredients {
+    max-height: 490px;
+  }
+}
+
+@media (height >= 800px) {
+  .ingredients {
+    max-height: 510px;
+  }
+}
+
+@media (height >= 840px) {
+  .ingredients {
+    max-height: 550px;
+  }
+}
+
+@media (height >= 880px) {
+  .ingredients {
+    max-height: 590px;
+  }
+}
+
+@media (height >= 920px) {
+  .ingredients {
+    max-height: 630px;
+  }
+}
+
+@media (height >= 960px) {
+  .ingredients {
+    max-height: 670px;
+  }
+}
+
+@media (height >= 1000px) {
+  .ingredients {
+    max-height: 710px;
+  }
+}
+
+@media (height >= 1000px) {
+  .ingredients {
+    max-height: 710px;
+  }
+}
+
+@media (height >= 1040px) {
+  .ingredients {
+    max-height: 750px;
+  }
+}
+
+@media (height >= 1080px) {
+  .ingredients {
+    max-height: 790px;
+  }
+}
+
+@media (height >= 1120px) {
+  .ingredients {
+    max-height: 830px;
+  }
+}
+
+@media (height >= 1160px) {
+  .ingredients {
+    max-height: 870px;
+  }
+}
+
+@media (height >= 1200px) {
+  .ingredients {
+    max-height: 910px;
+  }
+}
+
+@media (height >= 1240px) {
+  .ingredients {
+    max-height: 950px;
+  }
 }

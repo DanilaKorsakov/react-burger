@@ -7,6 +7,18 @@
 }
 
 .constructor_elements {
+  position: relative;
   display: flex;
   flex-direction: column;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.order_details {
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
