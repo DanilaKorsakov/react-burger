@@ -16,7 +16,7 @@ function Ingredient({ onAddPickedIngredients, ingredient, hasBun }) {
   };
 
   return (
-    <div onClick={handleClick}>
+    <div onClick={handleClick} className={styles.ingredient}>
       {count ? <Counter count={count} size="default" /> : null}
       <img src={`${ingredient.image}`} alt="ingredient" className="pr-4 pl-4" />
       <div className={`${styles.currency} mt-1 mb-1`}>

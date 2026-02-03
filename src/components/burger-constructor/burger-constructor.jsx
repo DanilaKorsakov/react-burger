@@ -24,22 +24,24 @@ export const BurgerConstructor = ({ ingredients }) => {
             extraClass="mb-4"
           />
         )}
-        {ingredients &&
-          ingredients.map(
-            (ingredient) =>
-              ingredient.type !== 'bun' && (
-                <ConstructorElement
-                  key={ingredient._id}
-                  // handleClose={function fee() {}}
-                  price={ingredient.price}
-                  text={ingredient.name}
-                  thumbnail={ingredient.image}
-                  type="normal"
-                  isLocked={false}
-                  extraClass="mb-4"
-                />
-              )
-          )}
+        <div className={`${styles.ingredients} custom-scroll`}>
+          {ingredients &&
+            ingredients.map(
+              (ingredient) =>
+                ingredient.type !== 'bun' && (
+                  <ConstructorElement
+                    key={ingredient._id}
+                    // handleClose={function fee() {}}
+                    price={ingredient.price}
+                    text={ingredient.name}
+                    thumbnail={ingredient.image}
+                    type="normal"
+                    isLocked={false}
+                    extraClass="mb-4"
+                  />
+                )
+            )}
+        </div>
         {bun && (
           <ConstructorElement
             key={bun._id}
@@ -53,7 +55,7 @@ export const BurgerConstructor = ({ ingredients }) => {
           />
         )}
       </div>
-      <div className={styles.order_details}>
+      <div className={`${styles.order_details} mt-10`}>
         <div className={`${styles.price} mr-10`}>
           <div className="text text_type_main-large">610</div>
           <CurrencyIcon type="primary" />

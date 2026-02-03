@@ -22,3 +22,7 @@
   justify-content: end;
   align-items: center;
 }
+
+.ingredients {
+  overflow-y: auto;
+}
