@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ children, mainRef, bunRef, sauceRef }) => {
+export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
   const [value, setValue] = useState('bun');
 
   function handleScroll(elementRef) {

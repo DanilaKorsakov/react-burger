@@ -1,0 +1,29 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 720px;
+  transform: translate(-50%, -50%);
+}
+
+.modal_info {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  position: absolute;
+  right: 0;
+  z-index: 100;
+  cursor: pointer;
+}
