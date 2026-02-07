@@ -13,7 +13,7 @@ import { BurgerConstructor } from '@components/burger-constructor/burger-constru
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
 import Ingredient from '@components/ingredient/ingredient';
 import IngredientList from '@components/ingredients-list/ingredients-list';
-import { ingredientsLink } from '@utils/consts';
+import { request } from '@utils/consts';
 
 import styles from './app.module.css';
 
@@ -46,10 +46,8 @@ export const App = () => {
       try {
         setLoading(true);
 
-        const response = await fetch(ingredientsLink);
-        const result = await response.json();
-
-        setIngredients(result.data);
+        const response = await request();
+        setIngredients(response.data);
         setLoading(false);
       } catch (err) {
         setError(err);
