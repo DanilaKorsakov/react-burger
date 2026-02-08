@@ -13,3 +13,62 @@
   text-align: center;
   list-style-type: none;
 }
+
+.ingredients {
+  max-height: 270px;
+  overflow-y: auto;
+}
+
+@media (height >= 600px) {
+  .ingredients {
+    max-height: 310px;
+  }
+}
+
+@media (height >= 680px) {
+  .ingredients {
+    max-height: 390px;
+  }
+}
+
+@media (height >= 720px) {
+  .ingredients {
+    max-height: 430px;
+  }
+}
+
+@media (height >= 800px) {
+  .ingredients {
+    max-height: 510px;
+  }
+}
+
+@media (height >= 840px) {
+  .ingredients {
+    max-height: 550px;
+  }
+}
+
+@media (height >= 960px) {
+  .ingredients {
+    max-height: 670px;
+  }
+}
+
+@media (height >= 1040px) {
+  .ingredients {
+    max-height: 750px;
+  }
+}
+
+@media (height >= 1120px) {
+  .ingredients {
+    max-height: 830px;
+  }
+}
+
+@media (height >= 1240px) {
+  .ingredients {
+    max-height: 950px;
+  }
+}

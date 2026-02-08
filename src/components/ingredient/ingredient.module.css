@@ -1,0 +1,14 @@
+.ingredient {
+  cursor: pointer;
+}
+
+.currency {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.name {
+  height: 48px;
+  text-align: center;
+}

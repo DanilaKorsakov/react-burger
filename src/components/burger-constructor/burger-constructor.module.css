@@ -5,3 +5,79 @@
   padding-bottom: 20px;
   color: var(--text-primary-color);
 }
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.order_details {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.ingredients {
+  max-height: 96px;
+  overflow-y: auto;
+}
+
+.ingredient {
+  cursor: pointer;
+}
+
+.ingredient_drag {
+  display: flex;
+  align-items: center;
+}
+
+.icon_drag {
+  transform: translateY(-25%);
+}
+
+.icon_price {
+  width: 33px;
+  height: 33px;
+}
+
+@media (height >= 664px) {
+  .ingredients {
+    max-height: 192px;
+  }
+}
+
+@media (height >= 760px) {
+  .ingredients {
+    max-height: 288px;
+  }
+}
+
+@media (height >= 856px) {
+  .ingredients {
+    max-height: 384px;
+  }
+}
+
+@media (height >= 952px) {
+  .ingredients {
+    max-height: 480px;
+  }
+}
+
+@media (height >= 1048px) {
+  .ingredients {
+    max-height: 576px;
+  }
+}
+
+@media (height >= 1144px) {
+  .ingredients {
+    max-height: 672px;
+  }
+}
+
+@media (height >= 1240px) {
+  .ingredients {
+    max-height: 768px;
+  }
+}

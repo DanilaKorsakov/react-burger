@@ -1,9 +1,18 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
+import { useState } from 'react';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ ingredients }) => {
-  console.log(ingredients);
+export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
+  const [value, setValue] = useState('bun');
+
+  function handleScroll(elementRef) {
+    elementRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function handleValue(value) {
+    setValue(value);
+  }
 
   return (
     <section className={styles.burger_ingredients}>
@@ -11,33 +20,38 @@ export const BurgerIngredients = ({ ingredients }) => {
         <ul className={styles.menu}>
           <Tab
             value="bun"
-            active={true}
-            onClick={() => {
-              /* TODO */
+            active={value === 'bun'}
+            onClick={(value) => {
+              handleScroll(bunRef);
+              handleValue(value);
             }}
           >
             Булки
           </Tab>
           <Tab
             value="main"
-            active={false}
-            onClick={() => {
-              /* TODO */
+            active={value === 'main'}
+            onClick={(value) => {
+              handleScroll(mainRef);
+              handleValue(value);
             }}
           >
             Начинки
           </Tab>
           <Tab
             value="sauce"
-            active={false}
-            onClick={() => {
-              /* TODO */
+            active={value === 'sauce'}
+            onClick={(value) => {
+              handleScroll(sauceRef);
+              handleValue(value);
             }}
           >
             Соусы
           </Tab>
         </ul>
       </nav>
+
+      <div className={`${styles.ingredients} mt-10 custom-scroll`}>{children}</div>
     </section>
   );
 };
