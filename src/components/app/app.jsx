@@ -1,77 +1,30 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import {
-  useLayoutEffect,
-  useState,
-  useRef,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react';
+import { useLayoutEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { AppHeader } from '@components/app-header/app-header';
 import { BurgerConstructor } from '@components/burger-constructor/burger-constructor';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients';
-import Ingredient from '@components/ingredient/ingredient';
-import IngredientList from '@components/ingredients-list/ingredients-list';
-import { request } from '@utils/consts';
+import { loadIngredients } from '@services/ingredients/actions.js';
+import {
+  getIngredients,
+  getIngredientsError,
+  getIngredientsLoading,
+} from '@services/ingredients/reducer.js';
 
 import styles from './app.module.css';
 
 export const App = () => {
-  const [ingredients, setIngredients] = useState([]);
-  const [pickedIngredients, setPickedIngredients] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState();
-  const [hasBun, setHasBun] = useState(false);
-
-  const mainRef = useRef(undefined);
-  const bunRef = useRef(undefined);
-  const sauceRef = useRef(undefined);
-
-  const buns = useMemo(
-    () => ingredients.filter((ingredient) => ingredient.type === 'bun'),
-    [ingredients]
-  );
-  const sauces = useMemo(
-    () => ingredients.filter((ingredient) => ingredient.type === 'sauce'),
-    [ingredients]
-  );
-  const mains = useMemo(
-    () => ingredients.filter((ingredient) => ingredient.type === 'main'),
-    [ingredients]
-  );
+  const dispatch = useDispatch();
+  const ingredients = useSelector(getIngredients);
+  const loading = useSelector(getIngredientsLoading);
+  const error = useSelector(getIngredientsError);
 
   useLayoutEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-
-        const response = await request();
-        setIngredients(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    })();
+    dispatch(loadIngredients());
   }, []);
-
-  useEffect(() => {
-    pickedIngredients.forEach((pickedIngredient) => {
-      if (pickedIngredient.type === 'bun') setHasBun(true);
-    });
-  }, [pickedIngredients]);
-
-  const handleAddPickedIngredients = useCallback(
-    (ingredient) => {
-      if (!hasBun) {
-        setPickedIngredients((prevIngredients) => [...prevIngredients, ingredient]);
-      } else if (hasBun && ingredient.type !== 'bun') {
-        setPickedIngredients((prevIngredients) => [...prevIngredients, ingredient]);
-      }
-    },
-    [ingredients]
-  );
 
   return (
     <div className={styles.app}>
@@ -88,44 +41,10 @@ export const App = () => {
           <Preloader />
         ) : (
           ingredients && (
-            <>
-              <BurgerIngredients mainRef={mainRef} bunRef={bunRef} sauceRef={sauceRef}>
-                <IngredientList name="Булки" ingredients={buns} ref={bunRef}>
-                  {(ingredient) => {
-                    return (
-                      <Ingredient
-                        ingredient={ingredient}
-                        hasBun={hasBun}
-                        onAddPickedIngredients={handleAddPickedIngredients}
-                      />
-                    );
-                  }}
-                </IngredientList>
-                <IngredientList name="Соусы" ingredients={sauces} ref={sauceRef}>
-                  {(ingredient) => {
-                    return (
-                      <Ingredient
-                        ingredient={ingredient}
-                        hasBun={hasBun}
-                        onAddPickedIngredients={handleAddPickedIngredients}
-                      />
-                    );
-                  }}
-                </IngredientList>
-                <IngredientList name="Начинки" ingredients={mains} ref={mainRef}>
-                  {(ingredient) => {
-                    return (
-                      <Ingredient
-                        ingredient={ingredient}
-                        hasBun={hasBun}
-                        onAddPickedIngredients={handleAddPickedIngredients}
-                      />
-                    );
-                  }}
-                </IngredientList>
-              </BurgerIngredients>
-              <BurgerConstructor ingredients={pickedIngredients} />
-            </>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients ingredients={ingredients} />
+              <BurgerConstructor />
+            </DndProvider>
           )
         )}
       </main>

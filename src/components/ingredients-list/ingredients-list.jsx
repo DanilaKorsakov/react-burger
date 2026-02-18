@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 
 import styles from './ingredients-list.module.css';
 
-function IngredientList({ name, children, ingredients, ref }) {
+function IngredientList({ name, ingredients, ref, children }) {
   return (
     <>
       <h2 className="text text_type_main-medium mb-6 " ref={ref}>

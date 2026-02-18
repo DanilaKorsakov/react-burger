@@ -22,22 +22,25 @@
   overflow-y: auto;
 }
 
-.ingredient {
-  cursor: pointer;
-}
-
-.ingredient_drag {
-  display: flex;
-  align-items: center;
-}
-
-.icon_drag {
-  transform: translateY(-25%);
+.ingredientsList {
+  margin: 0;
+  padding: 0;
 }
 
 .icon_price {
   width: 33px;
   height: 33px;
+}
+
+.ingredient_substrate {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 80px;
+}
+
+.highlight {
+  border: 3px dashed var(--colors-interface-accent);
 }
 
 @media (height >= 664px) {
