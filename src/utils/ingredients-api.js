@@ -12,16 +12,16 @@ function checkResponse(res) {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-function response(url, options = {}) {
+function request(url, options = {}) {
   return fetch(url, options).then(checkResponse);
 }
 
 export function getIngredients() {
-  return response(`${ingredientsApiConfig.baseURL}/ingredients`).then((res) => res.data);
+  return request(`${ingredientsApiConfig.baseURL}/ingredients`).then((res) => res.data);
 }
 
 export function createOrder(ingredients) {
-  return response(`${ingredientsApiConfig.baseURL}/orders`, {
+  return request(`${ingredientsApiConfig.baseURL}/orders`, {
     method: 'POST',
     headers: ingredientsApiConfig.headers,
     body: JSON.stringify({

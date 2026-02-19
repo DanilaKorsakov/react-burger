@@ -38,7 +38,7 @@ function Ingredient({ ingredient, onOpenModal }) {
   return (
     <div onClick={handleClick} ref={dragRef} className={styles.ingredient}>
       {count ? <Counter count={count} size="default" /> : null}
-      <img src={ingredient.image} alt="ingredient" className="pr-4 pl-4" />
+      <img src={ingredient.image} alt={ingredient.name} className="pr-4 pl-4" />
       <div className={`${styles.currency} mt-1 mb-1`}>
         <span className="text text_type_digits-default mr-2">{ingredient.price}</span>
         <CurrencyIcon type="primary" />

@@ -40,9 +40,9 @@ export const App = () => {
         ) : loading ? (
           <Preloader />
         ) : (
-          ingredients && (
+          ingredients.length > 0 && (
             <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients ingredients={ingredients} />
+              <BurgerIngredients />
               <BurgerConstructor />
             </DndProvider>
           )

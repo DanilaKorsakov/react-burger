@@ -4,13 +4,14 @@ import {
   CurrencyIcon,
 } from '@krgaa/react-developer-burger-ui-components';
 import { clsx } from 'clsx';
-import { useState, useReducer, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ConstructorIngredient } from '@components/constructor-ingredient/constructor-ingredient.jsx';
 import Modal from '@components/modal/modal.jsx';
 import OrderDetails from '@components/order-details/order-details.jsx';
+import { useModal } from '@hooks/useModal.jsx';
 import {
   addBun,
   addIngredient,
@@ -44,8 +45,8 @@ export const BurgerConstructor = () => {
   const ingredients = useSelector(getPickedIngredients);
   const bun = useSelector(getBun);
   const dispatch = useDispatch();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
-  const [visible, setVisible] = useState(false);
   const [state, priceDispatch] = useReducer(priceReducer, initialState);
 
   useEffect(() => {
@@ -77,14 +78,6 @@ export const BurgerConstructor = () => {
       dispatch(addBun(bun));
     },
   });
-
-  function handleOpenModal() {
-    setVisible(true);
-  }
-
-  function handleCloseModal() {
-    setVisible(false);
-  }
 
   return (
     <section className={`${styles.burger_constructor} ml-10`}>
@@ -147,12 +140,13 @@ export const BurgerConstructor = () => {
           <CurrencyIcon type="primary" className={`${styles.icon_price} ml-2`} />
         </div>
         <Button
+          disabled={!bun}
           onClick={function fee() {
             const ingredientsIds = bun
               ? [bun._id, ...ingredients.map((item) => item._id), bun._id]
               : ingredients.map((item) => item._id);
             dispatch(createOrder(ingredientsIds));
-            handleOpenModal();
+            openModal();
           }}
           size="medium"
           type="primary"
@@ -161,8 +155,8 @@ export const BurgerConstructor = () => {
         </Button>
       </div>
 
-      {visible && (
-        <Modal onClose={handleCloseModal}>
+      {isModalOpen && (
+        <Modal onClose={closeModal}>
           <OrderDetails />
         </Modal>
       )}
