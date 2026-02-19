@@ -1,4 +1,5 @@
 .blur {
+  text-align: center;
   text-shadow:
     0 4px 32px rgb(51 51 255 / 50%),
     0 0 8px rgb(51 51 255 / 25%),
@@ -6,6 +7,6 @@
 }
 
 .icon {
-  width: 48px;
-  height: 48px;
+  width: 107px;
+  height: 102px;
 }

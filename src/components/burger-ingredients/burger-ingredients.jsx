@@ -1,17 +1,72 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import IngredientDetails from '@components/ingredient-details/ingredient-details';
+import Ingredient from '@components/ingredient/ingredient.jsx';
+import IngredientList from '@components/ingredients-list/ingredients-list';
+import Modal from '@components/modal/modal';
+import { useModal } from '@hooks/useModal.jsx';
+import { deleteIngredientDetails, getIngredient } from '@services/ingredient/reducer.js';
+import { getIngredients } from '@services/ingredients/reducer.js';
 
 import styles from './burger-ingredients.module.css';
 
-export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
+export const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const ingredient = useSelector(getIngredient);
+  const ingredients = useSelector(getIngredients);
+  const { isModalOpen, openModal, closeModal } = useModal();
+
   const [value, setValue] = useState('bun');
+
+  const ingredientsScrollRef = useRef(undefined);
+  const mainRef = useRef(undefined);
+  const bunRef = useRef(undefined);
+  const sauceRef = useRef(undefined);
+
+  useEffect(() => {
+    function handleScroll() {
+      const scrollTop = customScroll.getBoundingClientRect().top;
+      const bunsTop = bunRef.current.getBoundingClientRect().top - scrollTop;
+      const mainsTop = mainRef.current.getBoundingClientRect().top - scrollTop;
+      const saucesTop = sauceRef.current.getBoundingClientRect().top - scrollTop;
+
+      if (-bunsTop < mainsTop) {
+        setValue('bun');
+      } else if (-mainsTop < saucesTop) {
+        setValue('main');
+      } else {
+        setValue('sauce');
+      }
+    }
+    const customScroll = ingredientsScrollRef.current;
+    customScroll.addEventListener('scroll', handleScroll);
+    return () => {
+      customScroll.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  function handleCloseModal() {
+    closeModal();
+    dispatch(deleteIngredientDetails());
+  }
+
+  const buns = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === 'bun'),
+    [ingredients]
+  );
+  const sauces = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === 'sauce'),
+    [ingredients]
+  );
+  const mains = useMemo(
+    () => ingredients.filter((ingredient) => ingredient.type === 'main'),
+    [ingredients]
+  );
 
   function handleScroll(elementRef) {
     elementRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function handleValue(value) {
-    setValue(value);
   }
 
   return (
@@ -21,9 +76,8 @@ export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
           <Tab
             value="bun"
             active={value === 'bun'}
-            onClick={(value) => {
+            onClick={() => {
               handleScroll(bunRef);
-              handleValue(value);
             }}
           >
             Булки
@@ -31,9 +85,8 @@ export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
           <Tab
             value="main"
             active={value === 'main'}
-            onClick={(value) => {
+            onClick={() => {
               handleScroll(mainRef);
-              handleValue(value);
             }}
           >
             Начинки
@@ -41,9 +94,8 @@ export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
           <Tab
             value="sauce"
             active={value === 'sauce'}
-            onClick={(value) => {
+            onClick={() => {
               handleScroll(sauceRef);
-              handleValue(value);
             }}
           >
             Соусы
@@ -51,7 +103,39 @@ export const BurgerIngredients = ({ children, bunRef, sauceRef, mainRef }) => {
         </ul>
       </nav>
 
-      <div className={`${styles.ingredients} mt-10 custom-scroll`}>{children}</div>
+      <div
+        ref={ingredientsScrollRef}
+        className={`${styles.ingredients} mt-10 custom-scroll`}
+      >
+        <IngredientList name="Булки" ingredients={buns} ref={bunRef}>
+          {(ingredient) => {
+            return <Ingredient ingredient={ingredient} onOpenModal={openModal} />;
+          }}
+        </IngredientList>
+        <IngredientList name="Начинки" ingredients={mains} ref={mainRef}>
+          {(ingredient) => {
+            return <Ingredient ingredient={ingredient} onOpenModal={openModal} />;
+          }}
+        </IngredientList>
+        <IngredientList name="Соусы" ingredients={sauces} ref={sauceRef}>
+          {(ingredient) => {
+            return <Ingredient ingredient={ingredient} onOpenModal={openModal} />;
+          }}
+        </IngredientList>
+      </div>
+
+      {isModalOpen && (
+        <Modal onClose={handleCloseModal} header={'Детали ингредиента'}>
+          <IngredientDetails
+            image={ingredient.image}
+            name={ingredient.name}
+            calories={ingredient.calories}
+            proteins={ingredient.proteins}
+            fat={ingredient.fat}
+            carbohydrates={ingredient.carbohydrates}
+          />
+        </Modal>
+      )}
     </section>
   );
 };
