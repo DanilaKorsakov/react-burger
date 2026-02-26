@@ -1,18 +1,16 @@
-import { Counter, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
+import { IngredientUi } from '@components/ui/ingredient-ui/ingredient-ui.jsx';
 import { getBun, getPickedIngredients } from '@services/burger-constructor/reducer.js';
-import { getIngredientDetails } from '@services/ingredient/reducer.js';
 
-import styles from './ingredient.module.css';
-
-function Ingredient({ ingredient, onOpenModal }) {
-  const dispatch = useDispatch();
+export const Ingredient = ({ ingredient }) => {
   const pickedIngredients = useSelector(getPickedIngredients);
   const bun = useSelector(getBun);
   const [count, setCount] = useState(0);
+  const location = useLocation();
 
   const [, dragRef] = useDrag({
     type: ingredient.type !== 'bun' ? 'ingredient' : 'bun',
@@ -30,24 +28,15 @@ function Ingredient({ ingredient, onOpenModal }) {
     if (bun && bun._id === ingredient._id) setCount((prevState) => prevState + 2);
   }, [pickedIngredients, bun]);
 
-  const handleClick = () => {
-    dispatch(getIngredientDetails(ingredient));
-    onOpenModal();
-  };
-
   return (
-    <div onClick={handleClick} ref={dragRef} className={styles.ingredient}>
-      {count ? <Counter count={count} size="default" /> : null}
-      <img src={ingredient.image} alt={ingredient.name} className="pr-4 pl-4" />
-      <div className={`${styles.currency} mt-1 mb-1`}>
-        <span className="text text_type_digits-default mr-2">{ingredient.price}</span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <div className={`${styles.name} text text_type_main-default`}>
-        {ingredient.name}
-      </div>
-    </div>
+    <IngredientUi
+      count={count}
+      dragRef={dragRef}
+      location={location}
+      name={ingredient.name}
+      price={ingredient.price}
+      image={ingredient.image}
+      id={ingredient._id}
+    />
   );
-}
-
-export default Ingredient;
+};

@@ -1,0 +1,15 @@
+.order_details {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.icon_price {
+  width: 33px;
+  height: 33px;
+}

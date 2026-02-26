@@ -1,22 +1,14 @@
 import { Tab } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import IngredientDetails from '@components/ingredient-details/ingredient-details';
-import Ingredient from '@components/ingredient/ingredient.jsx';
-import IngredientList from '@components/ingredients-list/ingredients-list';
-import Modal from '@components/modal/modal';
-import { useModal } from '@hooks/useModal.jsx';
-import { deleteIngredientDetails, getIngredient } from '@services/ingredient/reducer.js';
+import { IngredientList } from '@components/ingredients-list/ingredients-list';
 import { getIngredients } from '@services/ingredients/reducer.js';
 
 import styles from './burger-ingredients.module.css';
 
 export const BurgerIngredients = () => {
-  const dispatch = useDispatch();
-  const ingredient = useSelector(getIngredient);
   const ingredients = useSelector(getIngredients);
-  const { isModalOpen, openModal, closeModal } = useModal();
 
   const [value, setValue] = useState('bun');
 
@@ -46,11 +38,6 @@ export const BurgerIngredients = () => {
       customScroll.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  function handleCloseModal() {
-    closeModal();
-    dispatch(deleteIngredientDetails());
-  }
 
   const buns = useMemo(
     () => ingredients.filter((ingredient) => ingredient.type === 'bun'),
@@ -107,35 +94,10 @@ export const BurgerIngredients = () => {
         ref={ingredientsScrollRef}
         className={`${styles.ingredients} mt-10 custom-scroll`}
       >
-        <IngredientList name="Булки" ingredients={buns} ref={bunRef}>
-          {(ingredient) => {
-            return <Ingredient ingredient={ingredient} onOpenModal={openModal} />;
-          }}
-        </IngredientList>
-        <IngredientList name="Начинки" ingredients={mains} ref={mainRef}>
-          {(ingredient) => {
-            return <Ingredient ingredient={ingredient} onOpenModal={openModal} />;
-          }}
-        </IngredientList>
-        <IngredientList name="Соусы" ingredients={sauces} ref={sauceRef}>
-          {(ingredient) => {
-            return <Ingredient ingredient={ingredient} onOpenModal={openModal} />;
-          }}
-        </IngredientList>
+        <IngredientList name="Булки" ingredients={buns} ref={bunRef} />
+        <IngredientList name="Начинки" ingredients={mains} ref={mainRef} />
+        <IngredientList name="Соусы" ingredients={sauces} ref={sauceRef} />
       </div>
-
-      {isModalOpen && (
-        <Modal onClose={handleCloseModal} header={'Детали ингредиента'}>
-          <IngredientDetails
-            image={ingredient.image}
-            name={ingredient.name}
-            calories={ingredient.calories}
-            proteins={ingredient.proteins}
-            fat={ingredient.fat}
-            carbohydrates={ingredient.carbohydrates}
-          />
-        </Modal>
-      )}
     </section>
   );
 };

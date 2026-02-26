@@ -1,8 +1,10 @@
 import { clsx } from 'clsx';
 
+import { Ingredient } from '@components/ingredient/ingredient.jsx';
+
 import styles from './ingredients-list.module.css';
 
-function IngredientList({ name, ingredients, ref, children }) {
+export const IngredientList = ({ name, ingredients, ref }) => {
   return (
     <>
       <h2 className="text text_type_main-medium mb-6 " ref={ref}>
@@ -14,12 +16,10 @@ function IngredientList({ name, ingredients, ref, children }) {
             key={ingredient._id}
             className={`${styles.ingredient} ${clsx(index % 2 === 0 && 'mr-6', ingredients.length > 2 && index < ingredients.length - 2 && 'mb-8')}`}
           >
-            {children(ingredient)}
+            <Ingredient ingredient={ingredient} />
           </li>
         ))}
       </ul>
     </>
   );
-}
-
-export default IngredientList;
+};

@@ -1,38 +1,45 @@
+import { useIngredient } from '@hooks/useIngredient.jsx';
+
 import styles from './ingredient-details.module.css';
 
-function IngredientDetails({ image, name, calories, proteins, fat, carbohydrates }) {
+export const IngredientDetails = ({ header }) => {
+  const { ingredient } = useIngredient();
+
   return (
     <>
-      <img src={image} alt="ingredient image" className={styles.ingredient_image} />
-      <div className="text text_type_main-medium mt-6 mb-8">{name}</div>
+      {header && <div className="text text_type_main-large mt-30">{header}</div>}
+      <img
+        src={ingredient.image}
+        alt="ingredient image"
+        className={styles.ingredient_image}
+      />
+      <div className="text text_type_main-medium mt-6 mb-8">{ingredient.name}</div>
       <div className={`${styles.ingredient_details} mb-15`}>
         <div
           className={` ${styles.text_center} text text_type_main-default text_color_inactive mr-5`}
         >
           <div>Калории,ккал</div>
-          <div>{calories}</div>
+          <div>{ingredient.calories}</div>
         </div>
         <div
           className={` ${styles.text_center} text text_type_main-default text_color_inactive mr-5`}
         >
           <div>Белки, г</div>
-          <div>{proteins}</div>
+          <div>{ingredient.proteins}</div>
         </div>
         <div
           className={` ${styles.text_center} text text_type_main-default text_color_inactive mr-5`}
         >
           <div>Жиры, г</div>
-          <div>{fat}</div>
+          <div>{ingredient.fat}</div>
         </div>
         <div
           className={` ${styles.text_center} text text_type_main-default text_color_inactive mr-5`}
         >
           <div>Углеводы, г</div>
-          <div>{carbohydrates}</div>
+          <div>{ingredient.carbohydrates}</div>
         </div>
       </div>
     </>
   );
-}
-
-export default IngredientDetails;
+};

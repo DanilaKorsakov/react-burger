@@ -13,14 +13,16 @@ import iconPath from '../../assets/images/success.svg';
 
 import styles from './order-details.module.css';
 
-function OrderDetails() {
+export const OrderDetails = () => {
   const order = useSelector(getOrder);
   const loading = useSelector(getOrderLoading);
   const orderError = useSelector(getOrderError);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (order) dispatch(deleteIngredients());
+    if (order) {
+      dispatch(deleteIngredients());
+    }
   }, []);
 
   return (
@@ -54,6 +56,4 @@ function OrderDetails() {
       )}
     </>
   );
-}
-
-export default OrderDetails;
+};
