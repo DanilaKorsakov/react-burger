@@ -1,0 +1,66 @@
+import { clsx } from 'clsx';
+import { NavLink } from 'react-router-dom';
+
+import styles from './profile-navigation.module.css';
+
+export const ProfileNavigation = ({ location }) => {
+  return (
+    <section className="mr-15">
+      <nav className="mb-20">
+        <ul className={styles.nav_menu}>
+          <NavLink
+            to={'/profile'}
+            end
+            className={({ isActive }) =>
+              clsx(
+                'text',
+                'text_type_main-medium',
+                styles.nav_link,
+                isActive && styles.active
+              )
+            }
+          >
+            Профиль
+          </NavLink>
+          <NavLink
+            to={'/profile/orders'}
+            end
+            className={({ isActive }) =>
+              clsx(
+                'text',
+                'text_type_main-medium',
+                styles.nav_link,
+                isActive && styles.active
+              )
+            }
+          >
+            История заказов
+          </NavLink>
+          <NavLink
+            to={'/'}
+            end
+            className={({ isActive }) =>
+              clsx(
+                'text',
+                'text_type_main-medium',
+                styles.nav_link,
+                isActive && styles.active
+              )
+            }
+          >
+            Выход
+          </NavLink>
+        </ul>
+      </nav>
+      <div
+        className={`${styles.profile_text} text text_type_main-default text_color_inactive`}
+      >
+        В этом разделе вы можете <br />{' '}
+        {location.pathname === '/profile'
+          ? 'изменить свои персональные данные'
+          : location.pathname === '/profile/orders' &&
+            'просмотреть свою историю заказов'}
+      </div>
+    </section>
+  );
+};

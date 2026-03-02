@@ -1,7 +1,6 @@
 import { CloseIcon } from '@krgaa/react-developer-burger-ui-components';
 import { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import { useNavigate } from 'react-router-dom';
 
 import { ModalOverlay } from '@components/modal-overlay/modal-overlay';
 
@@ -10,23 +9,14 @@ const modalRoot = document.getElementById('react-modals');
 
 export const Modal = ({ children, header, onClose }) => {
   const modalOverlayRef = useRef(null);
-  const navigate = useNavigate();
-
-  function handleClose() {
-    if (!onClose) {
-      navigate('/');
-    } else {
-      onClose();
-    }
-  }
 
   useEffect(() => {
     function handleEscape(e) {
-      if (e.key === 'Escape') handleClose();
+      if (e.key === 'Escape') onClose();
     }
 
     function handleClick(e) {
-      if (e.target === modalOverlayRef.current) handleClose();
+      if (e.target === modalOverlayRef.current) onClose();
     }
 
     document.addEventListener('keydown', handleEscape);
@@ -49,7 +39,7 @@ export const Modal = ({ children, header, onClose }) => {
               className={styles.icon}
               type="primary"
               onClick={() => {
-                handleClose();
+                onClose();
               }}
             />
           </div>
@@ -58,7 +48,7 @@ export const Modal = ({ children, header, onClose }) => {
             type="primary"
             className={`${styles.icon} ${styles.icon_solo} mr-10 mt-15`}
             onClick={() => {
-              handleClose();
+              onClose();
             }}
           />
         )}

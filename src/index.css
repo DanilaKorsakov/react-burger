@@ -2,6 +2,15 @@ body {
   margin: 0;
 }
 
+.mt-45 {
+  margin-top: calc(var(--offset-base-size) * 45);
+}
+
+.link {
+  color: var(--colors-interface-accent);
+  text-decoration: none;
+}
+
 /* Fix for scrollbar */
 
 @supports (scrollbar-color: auto) {

@@ -110,8 +110,6 @@ export const BurgerConstructor = () => {
 
       <BurgerOrder handleClick={handleClick} />
 
-      {/*проверять что ордер удалось сделать и тогда открываем модалку*/}
-
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <OrderDetails />

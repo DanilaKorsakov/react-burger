@@ -5,11 +5,7 @@
   margin-left: auto;
 }
 
-.main {
+.main_burger {
   display: flex;
   justify-content: space-between;
-  width: 1240px;
-  height: 100%;
-  margin: 0 auto;
-  overflow: hidden;
 }
