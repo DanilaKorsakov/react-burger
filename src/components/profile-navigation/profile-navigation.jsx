@@ -1,12 +1,13 @@
+import { Button } from '@krgaa/react-developer-burger-ui-components';
 import { clsx } from 'clsx';
 import { NavLink } from 'react-router-dom';
 
 import styles from './profile-navigation.module.css';
 
-export const ProfileNavigation = ({ location }) => {
+export const ProfileNavigation = ({ location, onClick }) => {
   return (
     <section className="mr-15">
-      <nav className="mb-20">
+      <nav>
         <ul className={styles.nav_menu}>
           <NavLink
             to={'/profile'}
@@ -36,22 +37,16 @@ export const ProfileNavigation = ({ location }) => {
           >
             История заказов
           </NavLink>
-          <NavLink
-            to={'/'}
-            end
-            className={({ isActive }) =>
-              clsx(
-                'text',
-                'text_type_main-medium',
-                styles.nav_link,
-                isActive && styles.active
-              )
-            }
-          >
-            Выход
-          </NavLink>
         </ul>
       </nav>
+      <Button
+        type="secondary"
+        extraClass={`mb-20 text text_type_main-medium ${styles.nav_link}`}
+        size="large"
+        onClick={onClick}
+      >
+        Выход
+      </Button>
       <div
         className={`${styles.profile_text} text text_type_main-default text_color_inactive`}
       >

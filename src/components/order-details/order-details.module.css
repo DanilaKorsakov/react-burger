@@ -10,3 +10,10 @@
   width: 107px;
   height: 102px;
 }
+
+.order_loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 596px;
+}

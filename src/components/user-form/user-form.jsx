@@ -4,43 +4,99 @@ import {
   Input,
   PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getError, getLoading, setError } from '@services/user/reducer.js';
 
 import styles from './user-form.module.css';
 
 export const UserForm = ({
   header,
-  hasEmail,
-  hasPassword,
-  button,
-  hasName,
-  hasEmailCode,
+  buttonName,
   emailPlaceholder,
   passwordPlaceholder,
+  values,
+  errors,
+  errorsText,
+  handleChange,
+  onSubmit,
+  isValid,
+  responseErrorText,
 }) => {
+  const error = useSelector(getError);
+  const isLoading = useSelector(getLoading);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setError(null));
+  }, []);
+
   return (
     <>
       {header && <div className={`text text_type_main-medium mt-45 mb-6`}>{header}</div>}
       <form action="" className={styles.form}>
-        {hasName && <Input type="text" placeholder="Имя" extraClass="mb-6" />}
-        {hasEmail && (
-          <EmailInput
-            name="email"
-            placeholder={emailPlaceholder || 'E-mail'}
+        {'name' in values && (
+          <Input
+            name="name"
+            id="name"
+            type="text"
+            placeholder="Имя"
             extraClass="mb-6"
+            value={values.name || ''}
+            error={errors.name}
+            errorText={errorsText.name}
+            onChange={handleChange}
           />
         )}
-        {hasPassword && (
+        {'email' in values && (
+          <EmailInput
+            name="email"
+            id="email"
+            placeholder={emailPlaceholder || 'E-mail'}
+            extraClass="mb-6"
+            value={values.email || ''}
+            error={errors.email}
+            errorText={errorsText.email}
+            onChange={handleChange}
+          />
+        )}
+        {'password' in values && (
           <PasswordInput
             icon="ShowIcon"
             name="password"
-            extraClass="mb-6"
+            id="password"
             placeholder={passwordPlaceholder || 'Пароль'}
+            extraClass="mb-6"
+            value={values.password || ''}
+            error={errors.password}
+            errorText={errorsText.password}
+            onChange={handleChange}
           />
         )}
-        {hasEmailCode && (
-          <Input type="text" placeholder="Введите код из письма" extraClass="mb-6" />
+        {'code' in values && (
+          <Input
+            name="code"
+            id="code"
+            type="text"
+            placeholder="Введите код из письма"
+            extraClass="mb-6"
+            value={values.code || ''}
+            error={errors.code}
+            errorText={errorsText.code}
+            onChange={handleChange}
+          />
         )}
-        {button && <Button>{button}</Button>}
+        {buttonName && (
+          <Button disabled={!isValid || isLoading} onClick={onSubmit}>
+            {buttonName}
+          </Button>
+        )}
+        {error && (
+          <div className={`text text_type_main-default ${styles.error} mt-5`}>
+            {responseErrorText}
+          </div>
+        )}
       </form>
     </>
   );

@@ -1,34 +1,24 @@
-import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom';
 
-import { UserProfileForm } from '@components/user-profile-form/user-profile-form.jsx';
+import { ProfileNavigation } from '@components/profile-navigation/profile-navigation.jsx';
+import { logout } from '@services/user/actions.js';
+
+import styles from './profile-page.module.css';
 
 export const ProfilePage = () => {
-  const ref = useRef(null);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const dispatch = useDispatch();
+  const location = useLocation();
 
-  useEffect(() => {
-    function handleBlur() {
-      setIsDisabled(!isDisabled);
-    }
-
-    const input = ref.current;
-
-    if (!isDisabled) {
-      input?.focus();
-      input?.addEventListener('blur', handleBlur);
-      return () => {
-        input?.removeEventListener('blur', handleBlur);
-      };
-    }
-  }, [isDisabled]);
-
-  function handleClick() {
-    setIsDisabled(!isDisabled);
+  function handleClick(e) {
+    e.preventDefault();
+    dispatch(logout());
   }
 
   return (
-    <>
-      <UserProfileForm onClick={handleClick} ref={ref} isDisabled={isDisabled} />
-    </>
+    <div className={`${styles.profile_layout} mt-30`}>
+      <ProfileNavigation location={location} onClick={handleClick} />
+      <Outlet />
+    </div>
   );
 };

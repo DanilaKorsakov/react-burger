@@ -2,27 +2,25 @@ import { ConstructorElement } from '@krgaa/react-developer-burger-ui-components'
 import { clsx } from 'clsx';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { BurgerOrder } from '@components/burger-order/burger-order.jsx';
 import { ConstructorIngredient } from '@components/constructor-ingredient/constructor-ingredient.jsx';
-import { Modal } from '@components/modal/modal.jsx';
-import { OrderDetails } from '@components/order-details/order-details.jsx';
-import { useModal } from '@hooks/useModal.jsx';
 import {
   addBun,
   addIngredient,
   getBun,
   getPickedIngredients,
 } from '@services/burger-constructor/reducer.js';
-import { createOrder } from '@services/order-details/actions.js';
 
 import styles from './burger-constructor.module.css';
 
 export const BurgerConstructor = () => {
   const ingredients = useSelector(getPickedIngredients);
+  const navigate = useNavigate();
   const bun = useSelector(getBun);
   const dispatch = useDispatch();
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const location = useLocation();
 
   const [{ highlightedIngredient }, ingredientDrop] = useDrop({
     accept: 'ingredient',
@@ -45,11 +43,7 @@ export const BurgerConstructor = () => {
   });
 
   function handleClick() {
-    const ingredientsIds = bun
-      ? [bun._id, ...ingredients.map((item) => item._id), bun._id]
-      : ingredients.map((item) => item._id);
-    dispatch(createOrder(ingredientsIds));
-    openModal();
+    navigate('/order', { state: { modalFrom: location } });
   }
 
   return (
@@ -109,12 +103,6 @@ export const BurgerConstructor = () => {
       </div>
 
       <BurgerOrder handleClick={handleClick} />
-
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <OrderDetails />
-        </Modal>
-      )}
     </section>
   );
 };

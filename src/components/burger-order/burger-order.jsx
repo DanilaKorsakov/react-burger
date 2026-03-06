@@ -1,7 +1,7 @@
 import { Button, CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 
-import { usePrice } from '@hooks/usePrice.jsx';
+import { usePrice } from '@hooks/use-price.jsx';
 import { getBun } from '@services/burger-constructor/reducer.js';
 
 import styles from './burger-order.module.css';

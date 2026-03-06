@@ -1,29 +1,17 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { deleteIngredients } from '@services/burger-constructor/reducer.js';
-import {
-  getOrderError,
-  getOrder,
-  getOrderLoading,
-} from '@services/order-details/reducer.js';
+import { useGetOrderDetails } from '@hooks/use-get-order-details.jsx';
+import { getOrderError, getOrderLoading } from '@services/order-details/reducer.js';
 
 import iconPath from '../../assets/images/success.svg';
 
 import styles from './order-details.module.css';
 
 export const OrderDetails = () => {
-  const order = useSelector(getOrder);
+  const { order } = useGetOrderDetails();
   const loading = useSelector(getOrderLoading);
   const orderError = useSelector(getOrderError);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (order) {
-      dispatch(deleteIngredients());
-    }
-  }, []);
 
   return (
     <>
@@ -32,7 +20,9 @@ export const OrderDetails = () => {
           {orderError}
         </div>
       ) : loading ? (
-        <Preloader />
+        <div className={` ${styles.order_loading}`}>
+          <Preloader />
+        </div>
       ) : (
         order && (
           <>

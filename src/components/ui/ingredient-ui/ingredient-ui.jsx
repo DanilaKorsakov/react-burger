@@ -9,7 +9,7 @@ export const IngredientUi = ({ count, dragRef, id, name, price, image, location 
       ref={dragRef}
       to={`/ingredients/${id}`}
       className={styles.ingredient}
-      state={{ from: location }}
+      state={{ modalFrom: location }}
     >
       {count ? <Counter count={count} size="default" /> : null}
       <img src={image} alt={name} className="pr-4 pl-4" />

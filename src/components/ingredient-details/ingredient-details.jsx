@@ -1,4 +1,4 @@
-import { useIngredient } from '@hooks/useIngredient.jsx';
+import { useIngredient } from '@hooks/use-ingredient.jsx';
 
 import styles from './ingredient-details.module.css';
 
