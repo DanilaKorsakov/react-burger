@@ -1,0 +1,9 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error {
+  color: var(--colors-interface-error);
+}

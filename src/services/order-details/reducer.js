@@ -9,7 +9,7 @@ const initialState = {
   loading: false,
 };
 
-export const orderDetails = createSlice({
+export const orderDetailsSlice = createSlice({
   name: 'orderDetails',
   initialState,
   selectors: {
@@ -28,11 +28,13 @@ export const orderDetails = createSlice({
         state.order = action.payload.order;
         state.name = action.payload.name;
         state.loading = false;
+        state.error = null;
       })
       .addCase(createOrder.rejected, (state, action) => {
         state.error = action.error?.message ?? 'Unknown error';
+        state.loading = false;
       });
   },
 });
 
-export const { getOrder, getOrderError, getOrderLoading } = orderDetails.selectors;
+export const { getOrder, getOrderError, getOrderLoading } = orderDetailsSlice.selectors;

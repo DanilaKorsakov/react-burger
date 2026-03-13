@@ -1,63 +1,26 @@
-import {
-  Button,
-  ConstructorElement,
-  CurrencyIcon,
-} from '@krgaa/react-developer-burger-ui-components';
+import { ConstructorElement } from '@krgaa/react-developer-burger-ui-components';
 import { clsx } from 'clsx';
-import { useReducer, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import { BurgerOrder } from '@components/burger-order/burger-order.jsx';
 import { ConstructorIngredient } from '@components/constructor-ingredient/constructor-ingredient.jsx';
-import Modal from '@components/modal/modal.jsx';
-import OrderDetails from '@components/order-details/order-details.jsx';
-import { useModal } from '@hooks/useModal.jsx';
 import {
   addBun,
   addIngredient,
   getBun,
   getPickedIngredients,
 } from '@services/burger-constructor/reducer.js';
-import { createOrder } from '@services/order-details/actions.js';
 
 import styles from './burger-constructor.module.css';
 
-const initialState = {
-  price: 0,
-};
-
-function priceReducer(state = initialState, action) {
-  switch (action.type) {
-    case 'COUNT_PRICE':
-      return {
-        ...state,
-        price: action.payload.reduce(
-          (accumulator, currentValue) => accumulator + currentValue,
-          0
-        ),
-      };
-    default:
-      return state;
-  }
-}
-
 export const BurgerConstructor = () => {
   const ingredients = useSelector(getPickedIngredients);
+  const navigate = useNavigate();
   const bun = useSelector(getBun);
   const dispatch = useDispatch();
-  const { isModalOpen, openModal, closeModal } = useModal();
-
-  const [state, priceDispatch] = useReducer(priceReducer, initialState);
-
-  useEffect(() => {
-    function handleCountPrice() {
-      const prices = bun
-        ? [bun.price, ...ingredients.map((item) => item.price), bun.price]
-        : ingredients.map((item) => item.price);
-      priceDispatch({ type: 'COUNT_PRICE', payload: prices });
-    }
-    handleCountPrice();
-  }, [ingredients, bun]);
+  const location = useLocation();
 
   const [{ highlightedIngredient }, ingredientDrop] = useDrop({
     accept: 'ingredient',
@@ -78,6 +41,10 @@ export const BurgerConstructor = () => {
       dispatch(addBun(bun));
     },
   });
+
+  function handleClick() {
+    navigate('/order', { state: { modalFrom: location } });
+  }
 
   return (
     <section className={`${styles.burger_constructor} ml-10`}>
@@ -134,32 +101,8 @@ export const BurgerConstructor = () => {
           </div>
         )}
       </div>
-      <div className={`${styles.order_details} mt-10`}>
-        <div className={`${styles.price} mr-10`}>
-          <div className="text text_type_main-large">{state.price}</div>
-          <CurrencyIcon type="primary" className={`${styles.icon_price} ml-2`} />
-        </div>
-        <Button
-          disabled={!bun}
-          onClick={function fee() {
-            const ingredientsIds = bun
-              ? [bun._id, ...ingredients.map((item) => item._id), bun._id]
-              : ingredients.map((item) => item._id);
-            dispatch(createOrder(ingredientsIds));
-            openModal();
-          }}
-          size="medium"
-          type="primary"
-        >
-          Оформить заказ
-        </Button>
-      </div>
 
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <OrderDetails />
-        </Modal>
-      )}
+      <BurgerOrder handleClick={handleClick} />
     </section>
   );
 };

@@ -1,0 +1,9 @@
+.buttons {
+  display: flex;
+  justify-content: end;
+}
+
+.error {
+  color: var(--colors-interface-error);
+  text-align: center;
+}

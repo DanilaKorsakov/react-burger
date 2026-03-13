@@ -8,7 +8,9 @@ import { useDispatch } from 'react-redux';
 
 import {
   changeIngredientPlace,
+  changeIngredientsOrder,
   deleteIngredient,
+  revertIngredientPlaces,
 } from '@services/burger-constructor/reducer.js';
 
 import styles from './constructor-ingredient.module.css';
@@ -20,6 +22,13 @@ export const ConstructorIngredient = ({ ingredient, index }) => {
   const [, dragRef] = useDrag({
     type: 'constructorIngredient',
     item: { index, ingredient },
+    end: (item, monitor) => {
+      if (!monitor.didDrop()) {
+        dispatch(revertIngredientPlaces(monitor.getItem()));
+      } else {
+        dispatch(changeIngredientsOrder());
+      }
+    },
   });
 
   const [, constructorIngredientDrop] = useDrop({
