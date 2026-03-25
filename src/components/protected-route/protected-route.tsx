@@ -1,7 +1,7 @@
 import { Preloader } from '@krgaa/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
+import { useSelector } from '@/hooks.ts';
 import { getIsAuthChecked, getUserData } from '@services/user/reducer.ts';
 
 import type { ReactPortal } from 'react';

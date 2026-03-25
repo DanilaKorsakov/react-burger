@@ -6,7 +6,7 @@ import styles from './profile-navigation.module.css';
 
 type TProfileNavigationProps = {
   location: Location;
-  onClick: () => void;
+  onClick: (() => void) | ((e: React.SyntheticEvent) => void) | undefined;
 };
 
 export const ProfileNavigation = ({

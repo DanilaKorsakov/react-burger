@@ -7,7 +7,7 @@ type TUseModalProps = {
 };
 
 type TUseModalReturn = {
-  handleClose: () => void;
+  handleClose: (() => void) | undefined;
 };
 
 export const useModal = ({

@@ -4,7 +4,7 @@ import {
   Input,
   PasswordInput,
 } from '@krgaa/react-developer-burger-ui-components';
-import { type ChangeEvent, type FormEvent, useEffect } from 'react';
+import { type ChangeEvent, useEffect } from 'react';
 
 import { useDispatch, useSelector } from '@/hooks.ts';
 import { getError, getLoading, setError } from '@services/user/reducer.ts';
@@ -37,7 +37,7 @@ type UserFormProps = {
   errors?: UserFormErrors;
   errorsText: UserFormErrorsText;
   handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+  onSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
   isValid: boolean;
   responseErrorText?: string;
 };

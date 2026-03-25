@@ -30,7 +30,7 @@ export const Modal = ({ children, header, prevLocation }: ModalProps): ReactPort
               className={styles.icon}
               type="primary"
               onClick={() => {
-                handleClose();
+                if (handleClose) handleClose();
               }}
             />
           </div>
@@ -39,7 +39,7 @@ export const Modal = ({ children, header, prevLocation }: ModalProps): ReactPort
             type="primary"
             className={`${styles.icon} ${styles.icon_solo} mr-10 mt-15`}
             onClick={() => {
-              handleClose();
+              if (handleClose) handleClose();
             }}
           />
         )}

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
+import { useSelector } from '@/hooks.ts';
 import { getIngredients } from '@services/ingredients/reducer.js';
 
 import type { TIngredient } from '@utils/types.ts';

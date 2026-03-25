@@ -7,7 +7,7 @@ import { getBun } from '@services/burger-constructor/reducer.ts';
 import styles from './burger-order.module.css';
 
 type BurgerOrderProps = {
-  handleClick: () => void;
+  handleClick: (() => void) | ((e: React.SyntheticEvent) => void) | undefined;
 };
 
 export const BurgerOrder = ({ handleClick }: BurgerOrderProps): React.JSX.Element => {

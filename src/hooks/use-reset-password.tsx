@@ -10,7 +10,7 @@ type useResetPasswordValues = {
 };
 
 type useResetPasswordResult = {
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
   response: TResponseWithoutUserInfo | null;
 };
 

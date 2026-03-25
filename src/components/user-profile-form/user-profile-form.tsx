@@ -8,7 +8,7 @@ import {
 import { useSelector } from '@/hooks.ts';
 import { getError } from '@services/user/reducer.ts';
 
-import type { FormEvent, Ref } from 'react';
+import type { ChangeEvent, Ref } from 'react';
 
 import styles from './user-profile-form.module.css';
 
@@ -31,9 +31,9 @@ type userProfileFormProps = {
   ref: Ref<HTMLInputElement>;
   isDisabled: boolean;
   isChanged: boolean;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-  onRevert: () => void;
+  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit: React.FormEventHandler<HTMLFormElement> | undefined;
+  onRevert: (() => void) | ((e: React.SyntheticEvent) => void) | undefined;
 };
 
 export const UserProfileForm = ({
