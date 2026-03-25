@@ -1,0 +1,19 @@
+.feed_order {
+  width: 584px;
+  background-color: var(--background);
+  border-radius: 40px;
+}
+
+.order_flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredients {
+  display: flex;
+}
+
+.order_price {
+  display: flex;
+}
