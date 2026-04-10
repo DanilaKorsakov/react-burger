@@ -1,4 +1,10 @@
 .ingredient {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingredient_icon {
   position: relative;
   display: flex;
   justify-content: center;
@@ -8,7 +14,7 @@
   border-radius: 100px;
 }
 
-.ingredient::after {
+.ingredient_icon::after {
   position: absolute;
   z-index: 2;
   display: block;
@@ -19,7 +25,7 @@
   content: '';
 }
 
-.ingredient::before {
+.ingredient_icon::before {
   position: absolute;
   z-index: 1;
   display: block;
@@ -34,4 +40,40 @@
   position: absolute;
   z-index: 3;
   height: calc(100% - 8px);
+}
+
+.ingredient_counter {
+  position: absolute;
+  z-index: 5;
+}
+
+.counter_background {
+  position: absolute;
+  z-index: 4;
+  width: 60px;
+  height: 60px;
+  background: var(--background);
+  border-radius: 100px;
+  opacity: 0.6;
+}
+
+.left_side {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  max-width: 320px;
+}
+
+.icon_price {
+  width: 22px;
+  height: 22px;
+}
+
+.price {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 192px;
 }

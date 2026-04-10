@@ -1,0 +1,11 @@
+.title {
+  width: 100%;
+  max-width: 1260px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.feed {
+  display: flex;
+  justify-content: space-between;
+}

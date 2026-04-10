@@ -2,7 +2,7 @@ import { type RefObject, useEffect } from 'react';
 import { type Location, useNavigate } from 'react-router-dom';
 
 type TUseModalProps = {
-  prevLocation?: Location['pathname'];
+  locationPathname?: Location['pathname'];
   modalOverlayRef: RefObject<HTMLDivElement | null>;
 };
 
@@ -11,13 +11,13 @@ type TUseModalReturn = {
 };
 
 export const useModal = ({
-  prevLocation = '/',
+  locationPathname = '/',
   modalOverlayRef,
 }: TUseModalProps): TUseModalReturn => {
   const navigate = useNavigate();
 
   function handleClose(): void {
-    navigate(prevLocation);
+    navigate(locationPathname);
   }
 
   useEffect(() => {

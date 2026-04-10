@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from '@/hooks.ts';
 import { AppHeader } from '@components/app-header/app-header.tsx';
+import { FeedOrderDetails } from '@components/feed-order-details/feed-order-details.tsx';
 import { IngredientDetails } from '@components/ingredient-details/ingredient-details.js';
 import { Modal } from '@components/modal/modal.js';
 import { OrderDetails } from '@components/order-details/order-details.js';
@@ -27,6 +28,8 @@ import {
 import { getOrderLoading } from '@services/order-details/reducer.js';
 import { checkUserAuth } from '@services/user/actions.js';
 
+import type { Location } from 'react-router-dom';
+
 import styles from './app.module.css';
 
 export const App = (): React.JSX.Element => {
@@ -35,7 +38,7 @@ export const App = (): React.JSX.Element => {
   const loading = useSelector(getIngredientsLoading);
   const error = useSelector(getIngredientsError);
   const location = useLocation();
-  const prevLocation: Location['pathname'] = location.state?.modalFrom;
+  const prevLocation: Location = location.state?.modalFrom;
 
   const isLoading = useSelector(getOrderLoading);
 
@@ -65,6 +68,10 @@ export const App = (): React.JSX.Element => {
                 <Route
                   path={'/ingredients/:id'}
                   element={<IngredientDetails header={'Детали ингредиента'} />}
+                />
+                <Route
+                  path={'feed/:id'}
+                  element={<FeedOrderDetails header={'#034533'} />}
                 />
                 <Route
                   path={'/register'}
@@ -117,6 +124,14 @@ export const App = (): React.JSX.Element => {
                           </Modal>
                         }
                       />
+                    }
+                  ></Route>
+                  <Route
+                    path={'feed/1'}
+                    element={
+                      <Modal prevLocation={prevLocation} header={'#034533'}>
+                        <FeedOrderDetails />
+                      </Modal>
                     }
                   ></Route>
                 </Routes>

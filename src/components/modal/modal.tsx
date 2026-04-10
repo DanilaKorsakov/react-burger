@@ -5,19 +5,23 @@ import ReactDOM from 'react-dom';
 import { ModalOverlay } from '@components/modal-overlay/modal-overlay.tsx';
 import { useModal } from '@hooks/use-modal.js';
 
+import type { Location } from 'react-router-dom';
+
 import styles from './modal.module.css';
 const modalRoot = document.getElementById('react-modals');
 
 type ModalProps = {
   children: ReactNode;
   header?: string;
-  prevLocation?: Location['pathname'];
+  prevLocation?: Location;
 };
 
 export const Modal = ({ children, header, prevLocation }: ModalProps): ReactPortal => {
   const modalOverlayRef = useRef<HTMLDivElement | null>(null);
 
-  const { handleClose } = useModal({ prevLocation, modalOverlayRef });
+  const locationPathname = prevLocation?.pathname;
+
+  const { handleClose } = useModal({ locationPathname, modalOverlayRef });
 
   return ReactDOM.createPortal(
     <>
@@ -25,7 +29,12 @@ export const Modal = ({ children, header, prevLocation }: ModalProps): ReactPort
       <div className={styles.modal}>
         {header ? (
           <div className={`${styles.header} mt-10 mr-10 ml-10`}>
-            <div className="text text_type_main-large">{header}</div>
+            {prevLocation?.pathname === '/feed' ||
+            prevLocation?.pathname === '/profile/orders' ? (
+              <div className="text text_type_digits-default">{header}</div>
+            ) : (
+              <div className="text text_type_main-large">{header}</div>
+            )}
             <CloseIcon
               className={styles.icon}
               type="primary"
