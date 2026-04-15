@@ -19,12 +19,14 @@ import { ProfilePage } from '@pages/profile-page/profile-page.js';
 import { ProfileSettingsPage } from '@pages/profile-settings-page/profile-settings-page.js';
 import { RegisterPage } from '@pages/register-page/register-page.js';
 import { ResetPasswordPage } from '@pages/reset-password-page/reset-password-page.js';
+import { wsConnect } from '@services/feed/actions.ts';
 import { loadIngredients } from '@services/ingredients/actions.js';
 import {
   getIngredients,
   getIngredientsError,
   getIngredientsLoading,
 } from '@services/ingredients/reducer.js';
+import { FEED_URL } from '@services/middleware/socket-middlware.ts';
 import { getOrderLoading } from '@services/order-details/reducer.js';
 import { checkUserAuth } from '@services/user/actions.js';
 
@@ -48,6 +50,7 @@ export const App = (): React.JSX.Element => {
 
   useEffect(() => {
     dispatch(checkUserAuth());
+    dispatch(wsConnect(FEED_URL));
   }, [dispatch]);
 
   return (
@@ -69,10 +72,7 @@ export const App = (): React.JSX.Element => {
                   path={'/ingredients/:id'}
                   element={<IngredientDetails header={'Детали ингредиента'} />}
                 />
-                <Route
-                  path={'feed/:id'}
-                  element={<FeedOrderDetails header={'#034533'} />}
-                />
+                <Route path={'feed/:id'} element={<FeedOrderDetails hasHeader />} />
                 <Route
                   path={'/register'}
                   element={<ProtectedRoute onlyUnAuth component={<RegisterPage />} />}
@@ -127,9 +127,9 @@ export const App = (): React.JSX.Element => {
                     }
                   ></Route>
                   <Route
-                    path={'feed/1'}
+                    path={'feed/:id'}
                     element={
-                      <Modal prevLocation={prevLocation} header={'#034533'}>
+                      <Modal prevLocation={prevLocation}>
                         <FeedOrderDetails />
                       </Modal>
                     }

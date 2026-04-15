@@ -77,3 +77,20 @@ export type TResponseWithoutUserInfo = {
   success: boolean;
   message: string;
 };
+
+export type TFeedOrder = {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type TFeedOrders = {
+  success: boolean;
+  orders: TFeedOrder[];
+  total: number;
+  totalToday: number;
+};

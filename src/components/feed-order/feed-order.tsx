@@ -2,54 +2,73 @@ import { CurrencyIcon } from '@krgaa/react-developer-burger-ui-components';
 import { Link, useLocation } from 'react-router-dom';
 
 import { FeedIngredient } from '@components/feed-ingredient/feed-ingredient.tsx';
+import { useFormatDate } from '@hooks/use-format-date.tsx';
+import { useOrderPrice } from '@hooks/use-order-price.tsx';
 
-import type { TIngredient } from '@utils/types.ts';
+import type { TFeedOrder } from '@utils/types.ts';
 
 import styles from './feed-order.module.css';
 
 type FeedOrderProps = {
-  order: TIngredient[];
+  order: TFeedOrder;
 };
 
 export const FeedOrder = ({ order }: FeedOrderProps): React.JSX.Element => {
   const location = useLocation();
+  const ingredientsIds = [...new Set(order.ingredients)];
+  const { price } = useOrderPrice(order);
+  const { formatDate } = useFormatDate(order.createdAt);
 
   return (
-    <Link to={`/feed/1`} state={{ modalFrom: location }} className={styles.link}>
+    <Link
+      to={`/feed/${order._id}`}
+      state={{ modalFrom: location }}
+      className={styles.link}
+    >
       <div className={`${styles.order_flex} mb-6`}>
-        <div className="text text_type_digits-default">#034535</div>
+        <div className="text text_type_digits-default">#{order.number}</div>
         <div className="text text_type_main-default text_color_inactive">
-          Сегодня, 16:20
+          {formatDate}
         </div>
       </div>
-      <div className="text text_type_main-medium mb-6">
-        Death Star Starship Main бургер
-      </div>
+      <div className="text text_type_main-medium mb-2">{order.name}</div>
+      {location.pathname == '/profile/orders' &&
+        (order?.status === 'done' ? (
+          <div className={`${styles.ready} text text_type_main-default mb-6`}>
+            Выполнен
+          </div>
+        ) : order?.status === 'pending' ? (
+          <div className={`text text_type_main-default mb-6`}>Готовится</div>
+        ) : (
+          <div className={`text text_type_main-default mb-6`}>Создан</div>
+        ))}
       <div className={styles.order_flex}>
         <div className={styles.ingredients}>
-          {order.slice(0, 5).map((ingredient, index) => (
+          {ingredientsIds.slice(0, 5).map((id, index) => (
             <FeedIngredient
-              key={index}
-              image={ingredient.image_mobile}
+              key={id}
+              id={id}
+              onlyImage
               divStyles={{
                 left: `${-16 * index}px`,
-                zIndex: order.length - index,
+                zIndex: ingredientsIds.length - index,
               }}
             />
           ))}
-          {order.length > 5 && (
+          {ingredientsIds.length > 5 && (
             <FeedIngredient
-              image={order[5].image_mobile}
+              id={ingredientsIds[5]}
+              onlyImage
               divStyles={{
                 left: `${-16 * 5}px`,
-                zIndex: order.length - 5,
+                zIndex: ingredientsIds.length - 5,
               }}
-              counter={order.length - 5}
+              counter={ingredientsIds.length - 5}
             />
           )}
         </div>
         <div className={styles.order_price}>
-          <div className="text text_type_digits-default mr-2">560</div>
+          <div className="text text_type_digits-default mr-2">{price}</div>
           <CurrencyIcon type="primary" />
         </div>
       </div>

@@ -10,13 +10,16 @@ type TUseIngredient = {
   ingredient: TIngredient | undefined;
 };
 
-export const useIngredient = (): TUseIngredient => {
+export const useIngredient = (initialId?: string): TUseIngredient => {
   const ingredients = useSelector(getIngredients);
   const { id } = useParams();
+  const ingredientId = useMemo<string | undefined>(() => {
+    return initialId || id;
+  }, []);
 
   const ingredient = useMemo<TIngredient | undefined>(() => {
     return ingredients.find(
-      (ingredient: TIngredient) => ingredient._id.toString() === id?.toString()
+      (ingredient: TIngredient) => ingredient._id.toString() === ingredientId?.toString()
     );
   }, []);
 

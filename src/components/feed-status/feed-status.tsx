@@ -1,8 +1,13 @@
+import { useSelector } from '@/hooks.ts';
+import { UseFeedOrders } from '@hooks/use-feed-orders.tsx';
+import { getOrders } from '@services/feed/reducer.ts';
+
 import styles from './feed-status.module.css';
 
 export const FeedStatus = (): React.JSX.Element => {
-  const arr1 = [...Array(15).keys()];
-  const arr2 = [...Array(6).keys()];
+  const orders = useSelector(getOrders);
+  const { doneOrders, workOrders } = UseFeedOrders();
+
   return (
     <section className={`${styles.feed_status} ml-15`}>
       <div className={`${styles.orders_ids} mb-15`}>
@@ -10,23 +15,23 @@ export const FeedStatus = (): React.JSX.Element => {
           <h2 className="text text_type_main-medium mb-6">Готовы:</h2>
           <div className={styles.columns}>
             <div className="mr-4">
-              {arr1.slice(0, 5).map((_item, index) => (
+              {doneOrders.slice(0, 5).map((orderNumber, index) => (
                 <div
                   key={index}
                   className={`${styles.ready} text text_type_digits-default mb-2`}
                 >
-                  1234567890
+                  {orderNumber}
                 </div>
               ))}
             </div>
             <div>
-              {arr1.length > 5 &&
-                arr1.slice(5, 10).map((_item, index) => (
+              {doneOrders.length > 5 &&
+                doneOrders.slice(5, 10).map((orderNumber, index) => (
                   <div
                     key={index}
                     className={`${styles.ready} text text_type_digits-default mb-2`}
                   >
-                    1234567890
+                    {orderNumber}
                   </div>
                 ))}
             </div>
@@ -36,17 +41,17 @@ export const FeedStatus = (): React.JSX.Element => {
           <h2 className="text text_type_main-medium mb-6">В работе:</h2>
           <div className={styles.columns}>
             <div className="mr-4">
-              {arr2.slice(0, 5).map((_item, index) => (
+              {workOrders.slice(0, 5).map((orderNumber, index) => (
                 <div key={index} className={`text text_type_digits-default mb-2`}>
-                  034538
+                  {orderNumber}
                 </div>
               ))}
             </div>
             <div>
-              {arr2.length > 5 &&
-                arr2.slice(5, 10).map((_item, index) => (
+              {workOrders.length > 5 &&
+                workOrders.slice(5, 10).map((orderNumber, index) => (
                   <div key={index} className={`text text_type_digits-default mb-2`}>
-                    034538
+                    {orderNumber}
                   </div>
                 ))}
             </div>
@@ -55,10 +60,12 @@ export const FeedStatus = (): React.JSX.Element => {
       </div>
 
       <h2 className="text text_type_main-medium">Выполнено за все время:</h2>
-      <div className={` ${styles.blur} text text_type_digits-large`}>28 752</div>
+      <div className={` ${styles.blur} text text_type_digits-large`}>{orders.total}</div>
 
       <h2 className="text text_type_main-medium mt-15">Выполнено за сегодня:</h2>
-      <div className={` ${styles.blur} text text_type_digits-large`}>138</div>
+      <div className={` ${styles.blur} text text_type_digits-large`}>
+        {orders.totalToday}
+      </div>
     </section>
   );
 };
