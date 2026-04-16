@@ -19,14 +19,12 @@ import { ProfilePage } from '@pages/profile-page/profile-page.js';
 import { ProfileSettingsPage } from '@pages/profile-settings-page/profile-settings-page.js';
 import { RegisterPage } from '@pages/register-page/register-page.js';
 import { ResetPasswordPage } from '@pages/reset-password-page/reset-password-page.js';
-import { wsConnect } from '@services/feed/actions.ts';
 import { loadIngredients } from '@services/ingredients/actions.js';
 import {
   getIngredients,
   getIngredientsError,
   getIngredientsLoading,
 } from '@services/ingredients/reducer.js';
-import { FEED_URL } from '@services/middleware/socket-middlware.ts';
 import { getOrderLoading } from '@services/order-details/reducer.js';
 import { checkUserAuth } from '@services/user/actions.js';
 
@@ -37,12 +35,11 @@ import styles from './app.module.css';
 export const App = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const ingredients = useSelector(getIngredients);
-  const loading = useSelector(getIngredientsLoading);
+  const isLoadingIngredients = useSelector(getIngredientsLoading);
   const error = useSelector(getIngredientsError);
   const location = useLocation();
   const prevLocation: Location = location.state?.modalFrom;
-
-  const isLoading = useSelector(getOrderLoading);
+  const isLoadingOrder = useSelector(getOrderLoading);
 
   useLayoutEffect(() => {
     dispatch(loadIngredients());
@@ -50,7 +47,6 @@ export const App = (): React.JSX.Element => {
 
   useEffect(() => {
     dispatch(checkUserAuth());
-    dispatch(wsConnect(FEED_URL));
   }, [dispatch]);
 
   return (
@@ -61,7 +57,7 @@ export const App = (): React.JSX.Element => {
           <div className="text text_type_main-large">
             Произошла ошибка, перезагрузите страницу
           </div>
-        ) : loading ? (
+        ) : isLoadingIngredients ? (
           <Preloader />
         ) : (
           ingredients.length > 0 && (
@@ -73,6 +69,10 @@ export const App = (): React.JSX.Element => {
                   element={<IngredientDetails header={'Детали ингредиента'} />}
                 />
                 <Route path={'feed/:id'} element={<FeedOrderDetails hasHeader />} />
+                <Route
+                  path={'/profile/orders/:id'}
+                  element={<ProtectedRoute component={<FeedOrderDetails hasHeader />} />}
+                />
                 <Route
                   path={'/register'}
                   element={<ProtectedRoute onlyUnAuth component={<RegisterPage />} />}
@@ -118,7 +118,7 @@ export const App = (): React.JSX.Element => {
                         component={
                           <Modal
                             prevLocation={prevLocation}
-                            header={(isLoading && 'Формируется заказ') || ''}
+                            header={(isLoadingOrder && 'Формируется заказ') || ''}
                           >
                             <OrderDetails />
                           </Modal>
@@ -132,6 +132,18 @@ export const App = (): React.JSX.Element => {
                       <Modal prevLocation={prevLocation}>
                         <FeedOrderDetails />
                       </Modal>
+                    }
+                  ></Route>
+                  <Route
+                    path={'/profile/orders/:id'}
+                    element={
+                      <ProtectedRoute
+                        component={
+                          <Modal prevLocation={prevLocation}>
+                            <FeedOrderDetails />
+                          </Modal>
+                        }
+                      />
                     }
                   ></Route>
                 </Routes>

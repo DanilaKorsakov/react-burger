@@ -94,3 +94,8 @@ export type TFeedOrders = {
   total: number;
   totalToday: number;
 };
+
+export type TFeedOrderResponse = {
+  success: boolean;
+  order: TFeedOrder;
+};

@@ -21,7 +21,13 @@ export const FeedOrder = ({ order }: FeedOrderProps): React.JSX.Element => {
 
   return (
     <Link
-      to={`/feed/${order._id}`}
+      to={
+        location.pathname === '/profile/orders'
+          ? `/profile/orders/${order._id}`
+          : location.pathname === '/feed'
+            ? `/feed/${order._id}`
+            : ''
+      }
       state={{ modalFrom: location }}
       className={styles.link}
     >

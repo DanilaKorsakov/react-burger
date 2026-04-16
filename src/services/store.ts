@@ -6,6 +6,16 @@ import { feedSlice, onConnecting, onError, onMessage } from '@services/feed/redu
 import { ingredientsSlice } from '@services/ingredients/reducer.js';
 import { socketMiddleware } from '@services/middleware/socket-middlware.ts';
 import { orderDetailsSlice } from '@services/order-details/reducer.js';
+import {
+  wsProfileConnect,
+  wsProfileDisconnect,
+} from '@services/profile-feed/actions.ts';
+import {
+  onProfileConnecting,
+  onProfileError,
+  onProfileMessage,
+  profileFeedSlice,
+} from '@services/profile-feed/reducer.ts';
 import { userSlice } from '@services/user/reducer.js';
 
 const rootReducer = combineSlices(
@@ -13,7 +23,8 @@ const rootReducer = combineSlices(
   burgerConstructorSlice,
   orderDetailsSlice,
   userSlice,
-  feedSlice
+  feedSlice,
+  profileFeedSlice
 );
 
 const feedMiddleware = socketMiddleware({
@@ -24,10 +35,18 @@ const feedMiddleware = socketMiddleware({
   onMessage,
 });
 
+const profileFeedMiddleware = socketMiddleware({
+  connect: wsProfileConnect,
+  disconnect: wsProfileDisconnect,
+  onError: onProfileError,
+  onConnecting: onProfileConnecting,
+  onMessage: onProfileMessage,
+});
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddlewares) => {
-    return getDefaultMiddlewares().concat(feedMiddleware);
+    return getDefaultMiddlewares().concat(feedMiddleware, profileFeedMiddleware);
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
