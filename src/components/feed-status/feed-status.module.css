@@ -1,0 +1,27 @@
+.feed_status {
+  display: flex;
+  flex-direction: column;
+  width: 580px;
+  max-width: 580px;
+  color: var(--text-primary-color);
+  font-family: 'Jet Brains Mono', serif;
+}
+
+.ready {
+  color: var(--colors-interface-success);
+}
+
+.columns {
+  display: flex;
+}
+
+.orders_ids {
+  display: flex;
+}
+
+.blur {
+  text-shadow:
+    0 4px 32px rgb(51 51 255 / 50%),
+    0 0 8px rgb(51 51 255 / 25%),
+    0 0 16px rgb(51 51 255 / 25%);
+}

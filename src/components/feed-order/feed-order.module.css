@@ -1,9 +1,3 @@
-.feed_order {
-  width: 584px;
-  background-color: var(--background);
-  border-radius: 40px;
-}
-
 .order_flex {
   display: flex;
   justify-content: space-between;
@@ -16,4 +10,13 @@
 
 .order_price {
   display: flex;
+}
+
+.link {
+  color: var(--text-primary-color);
+  text-decoration: none;
+}
+
+.ready {
+  color: var(--colors-interface-success);
 }

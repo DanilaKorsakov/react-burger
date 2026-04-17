@@ -4,6 +4,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 
 import { useDispatch, useSelector } from '@/hooks.ts';
 import { AppHeader } from '@components/app-header/app-header.tsx';
+import { FeedOrderDetails } from '@components/feed-order-details/feed-order-details.tsx';
 import { IngredientDetails } from '@components/ingredient-details/ingredient-details.js';
 import { Modal } from '@components/modal/modal.js';
 import { OrderDetails } from '@components/order-details/order-details.js';
@@ -27,17 +28,18 @@ import {
 import { getOrderLoading } from '@services/order-details/reducer.js';
 import { checkUserAuth } from '@services/user/actions.js';
 
+import type { Location } from 'react-router-dom';
+
 import styles from './app.module.css';
 
 export const App = (): React.JSX.Element => {
   const dispatch = useDispatch();
   const ingredients = useSelector(getIngredients);
-  const loading = useSelector(getIngredientsLoading);
+  const isLoadingIngredients = useSelector(getIngredientsLoading);
   const error = useSelector(getIngredientsError);
   const location = useLocation();
-  const prevLocation: Location['pathname'] = location.state?.modalFrom;
-
-  const isLoading = useSelector(getOrderLoading);
+  const prevLocation: Location = location.state?.modalFrom;
+  const isLoadingOrder = useSelector(getOrderLoading);
 
   useLayoutEffect(() => {
     dispatch(loadIngredients());
@@ -55,7 +57,7 @@ export const App = (): React.JSX.Element => {
           <div className="text text_type_main-large">
             Произошла ошибка, перезагрузите страницу
           </div>
-        ) : loading ? (
+        ) : isLoadingIngredients ? (
           <Preloader />
         ) : (
           ingredients.length > 0 && (
@@ -65,6 +67,11 @@ export const App = (): React.JSX.Element => {
                 <Route
                   path={'/ingredients/:id'}
                   element={<IngredientDetails header={'Детали ингредиента'} />}
+                />
+                <Route path={'feed/:id'} element={<FeedOrderDetails hasHeader />} />
+                <Route
+                  path={'/profile/orders/:id'}
+                  element={<ProtectedRoute component={<FeedOrderDetails hasHeader />} />}
                 />
                 <Route
                   path={'/register'}
@@ -111,9 +118,29 @@ export const App = (): React.JSX.Element => {
                         component={
                           <Modal
                             prevLocation={prevLocation}
-                            header={(isLoading && 'Формируется заказ') || ''}
+                            header={(isLoadingOrder && 'Формируется заказ') || ''}
                           >
                             <OrderDetails />
+                          </Modal>
+                        }
+                      />
+                    }
+                  ></Route>
+                  <Route
+                    path={'feed/:id'}
+                    element={
+                      <Modal prevLocation={prevLocation}>
+                        <FeedOrderDetails />
+                      </Modal>
+                    }
+                  ></Route>
+                  <Route
+                    path={'/profile/orders/:id'}
+                    element={
+                      <ProtectedRoute
+                        component={
+                          <Modal prevLocation={prevLocation}>
+                            <FeedOrderDetails />
                           </Modal>
                         }
                       />

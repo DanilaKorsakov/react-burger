@@ -1,0 +1,47 @@
+.feed_orders {
+  display: flex;
+  flex-direction: column;
+  max-width: 862px;
+  color: var(--text-primary-color);
+  font-family: 'Jet Brains Mono', serif;
+}
+
+.orders_scroll {
+  max-height: 690px;
+  overflow-y: auto;
+}
+
+.order {
+  box-sizing: border-box;
+  width: 584px;
+  background-color: var(--background);
+  border-radius: 40px;
+}
+
+.profile_order {
+  width: 844px;
+}
+
+@media (height >= 450px) {
+  .orders_scroll {
+    max-height: 214px;
+  }
+}
+
+@media (height >= 720px) {
+  .orders_scroll {
+    max-height: 450px;
+  }
+}
+
+@media (height >= 840px) {
+  .orders_scroll {
+    max-height: 690px;
+  }
+}
+
+@media (height >= 1040px) {
+  .orders_scroll {
+    max-height: 905px;
+  }
+}

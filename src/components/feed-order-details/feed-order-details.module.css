@@ -1,0 +1,29 @@
+.feed_order_details {
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+  text-align: left;
+}
+
+.header {
+  text-align: center;
+}
+
+.ready {
+  color: var(--colors-interface-success);
+}
+
+.ingredients_scroll {
+  max-height: 312px;
+  overflow-y: auto;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+}
+
+.order_footer {
+  display: flex;
+  justify-content: space-between;
+}

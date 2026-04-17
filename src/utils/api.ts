@@ -2,6 +2,8 @@ import { request } from '@utils/request.js';
 import { fetchWithRefresh } from '@utils/tokens.js';
 
 import type {
+  TFeedOrder,
+  TFeedOrderResponse,
   TFormValues,
   TIngredient,
   TIngredientResponse,
@@ -175,4 +177,12 @@ export async function changeUserData(formData: TProfileFormValues): Promise<TUse
   );
 
   return response.user;
+}
+
+export async function getOrder(id: string | undefined): Promise<TFeedOrder> {
+  const response = await request<TFeedOrderResponse>(
+    `${apiConfig.baseURL}/orders/${id}`
+  );
+
+  return response.order;
 }
