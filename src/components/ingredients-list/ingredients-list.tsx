@@ -12,12 +12,14 @@ type IngredientListProps = {
   ingredients: TIngredient[];
   name: string;
   ref: Ref<HTMLHeadingElement>;
+  type: string;
 };
 
 export const IngredientList = ({
   name,
   ingredients,
   ref,
+  type,
 }: IngredientListProps): React.JSX.Element => {
   return (
     <>
@@ -28,9 +30,10 @@ export const IngredientList = ({
         {ingredients.map((ingredient, index) => (
           <li
             key={ingredient._id}
+            data-testid={`${type}-${index}`}
             className={`${styles.ingredient} ${clsx(index % 2 === 0 && 'mr-6', ingredients.length > 2 && index < ingredients.length - 2 && 'mb-8')}`}
           >
-            <Ingredient ingredient={ingredient} />
+            <Ingredient ingredient={ingredient} index={index} />
           </li>
         ))}
       </ul>

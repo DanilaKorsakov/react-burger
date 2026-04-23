@@ -26,7 +26,7 @@ export const Modal = ({ children, header, prevLocation }: ModalProps): ReactPort
   return ReactDOM.createPortal(
     <>
       <ModalOverlay ref={modalOverlayRef} />
-      <div className={styles.modal}>
+      <div className={styles.modal} data-testid="modal">
         {header ? (
           <div className={`${styles.header} mt-10 mr-10 ml-10`}>
             <div className="text text_type_main-large">{header}</div>

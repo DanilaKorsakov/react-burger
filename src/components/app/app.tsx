@@ -24,8 +24,8 @@ import {
   getIngredients,
   getIngredientsError,
   getIngredientsLoading,
-} from '@services/ingredients/reducer.js';
-import { getOrderLoading } from '@services/order-details/reducer.js';
+} from '@services/ingredients/slice.js';
+import { getOrderLoading } from '@services/order-details/slice.js';
 import { checkUserAuth } from '@services/user/actions.js';
 
 import type { Location } from 'react-router-dom';

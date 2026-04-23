@@ -3,11 +3,11 @@ body {
 }
 
 .mt-45 {
-  margin-top: calc(var(--offset-base-size) * 45);
+  margin-top: calc(var(--offset-base-size) * 45) !important;
 }
 
 .link {
-  color: var(--colors-interface-accent);
+  color: var(--colors-interface-accent) !important;
   text-decoration: none;
 }
 

@@ -1,5 +1,5 @@
 import { useSelector } from '@/hooks.ts';
-import { getIngredients } from '@services/ingredients/reducer.ts';
+import { getIngredients } from '@services/ingredients/slice.ts';
 
 import type { TFeedOrder } from '@utils/types.ts';
 

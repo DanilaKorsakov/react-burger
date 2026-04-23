@@ -50,7 +50,7 @@ export const ProfileNavigation = ({
       <Button
         type="secondary"
         htmlType="button"
-        extraClass={`mb-20 text text_type_main-medium ${styles.nav_link}`}
+        extraClass={`mb-20 text text_type_main-medium ${styles.nav_link} ${styles.button_color}`}
         size="large"
         onClick={onClick}
       >

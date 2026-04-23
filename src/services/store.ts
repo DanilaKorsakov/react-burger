@@ -1,11 +1,11 @@
 import { combineSlices, configureStore } from '@reduxjs/toolkit';
 
-import { burgerConstructorSlice } from '@services/burger-constructor/reducer.js';
+import { burgerConstructorSlice } from '@services/burger-constructor/slice.js';
 import { wsConnect, wsDisconnect } from '@services/feed/actions.ts';
-import { feedSlice, onConnecting, onError, onMessage } from '@services/feed/reducer.ts';
-import { ingredientsSlice } from '@services/ingredients/reducer.js';
+import { feedSlice, onConnecting, onError, onMessage } from '@services/feed/slice.ts';
+import { ingredientsSlice } from '@services/ingredients/slice.js';
 import { socketMiddleware } from '@services/middleware/socket-middlware.ts';
-import { orderDetailsSlice } from '@services/order-details/reducer.js';
+import { orderDetailsSlice } from '@services/order-details/slice.js';
 import {
   wsProfileConnect,
   wsProfileDisconnect,
@@ -15,8 +15,8 @@ import {
   onProfileError,
   onProfileMessage,
   profileFeedSlice,
-} from '@services/profile-feed/reducer.ts';
-import { userSlice } from '@services/user/reducer.js';
+} from '@services/profile-feed/slice.ts';
+import { userSlice } from '@services/user/slice.js';
 
 const rootReducer = combineSlices(
   ingredientsSlice,

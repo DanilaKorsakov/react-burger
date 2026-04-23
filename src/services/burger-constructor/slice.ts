@@ -8,13 +8,13 @@ import type {
   TIngredientWithOrder,
 } from '@utils/types.ts';
 
-type TBurgerConstructor = {
+export type TBurgerConstructor = {
   bun: null | TIngredientWithKey;
   ingredients: TIngredientWithOrder[];
   order: number;
 };
 
-const initialState: TBurgerConstructor = {
+export const initialState: TBurgerConstructor = {
   bun: null,
   ingredients: [],
   order: 0,
@@ -51,6 +51,7 @@ export const burgerConstructorSlice = createSlice({
       state.ingredients = state.ingredients.filter(
         (ingredient) => ingredient.key !== action.payload
       );
+      state.order -= 1;
     },
     changeIngredientPlace: (state, action: PayloadAction<TIngredientDrag>) => {
       const { sourceIndex, destinationIndex, ingredient } = action.payload;

@@ -14,6 +14,8 @@ type IngredientUiProps = {
   price: number;
   image: string;
   location: Location;
+  type: string;
+  index: number;
 };
 
 export const IngredientUi = ({
@@ -24,6 +26,8 @@ export const IngredientUi = ({
   price,
   image,
   location,
+  type,
+  index,
 }: IngredientUiProps): React.JSX.Element => {
   const linkRef = useRef<HTMLAnchorElement | null>(null);
   useEffect(() => {
@@ -42,10 +46,20 @@ export const IngredientUi = ({
       {count ? <Counter count={count} size="default" /> : null}
       <img src={image} alt={name} className="pr-4 pl-4" />
       <div className={`${styles.currency} mt-1 mb-1`}>
-        <span className="text text_type_digits-default mr-2">{price}</span>
+        <span
+          className="text text_type_digits-default mr-2"
+          data-testid={`${type}-${index}-price`}
+        >
+          {price}
+        </span>
         <CurrencyIcon type="primary" />
       </div>
-      <div className={`${styles.name} text text_type_main-default`}>{name}</div>
+      <div
+        className={`${styles.name} text text_type_main-default`}
+        data-testid={`${type}-${index}-name`}
+      >
+        {name}
+      </div>
     </Link>
   );
 };

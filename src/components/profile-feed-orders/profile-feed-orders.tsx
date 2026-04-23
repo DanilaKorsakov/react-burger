@@ -1,6 +1,6 @@
 import { useSelector } from '@/hooks.ts';
 import { FeedOrder } from '@components/feed-order/feed-order.tsx';
-import { getProfileOrders } from '@services/profile-feed/reducer.ts';
+import { getProfileOrders } from '@services/profile-feed/slice.ts';
 
 import styles from './profile-feed-orders.module.css';
 

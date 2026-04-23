@@ -5,7 +5,7 @@ import { useDispatch } from '@/hooks.ts';
 import { UserForm } from '@components/user-form/user-form.tsx';
 import { useFormWithValidation } from '@hooks/use-form-with-validation.tsx';
 import { useResetPassword } from '@hooks/use-reset-password.tsx';
-import { setIsPasswordReset } from '@services/user/reducer.ts';
+import { setIsPasswordReset } from '@services/user/slice.ts';
 
 type ForgotPasswordPageData = {
   email: string;

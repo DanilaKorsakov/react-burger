@@ -5,9 +5,9 @@ import {
   deleteIngredients,
   getBun,
   getPickedIngredients,
-} from '@services/burger-constructor/reducer.ts';
+} from '@services/burger-constructor/slice.ts';
 import { createOrder } from '@services/order-details/actions.js';
-import { getOrder } from '@services/order-details/reducer.js';
+import { getOrder } from '@services/order-details/slice.js';
 
 import type { TOrder } from '@utils/types.ts';
 

@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 
 import { useSelector } from '@/hooks.ts';
-import { getBun, getPickedIngredients } from '@services/burger-constructor/reducer.ts';
+import { getBun, getPickedIngredients } from '@services/burger-constructor/slice.ts';
 
 type TUsePriceState = {
   price: number;

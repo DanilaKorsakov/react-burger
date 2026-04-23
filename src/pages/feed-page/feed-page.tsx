@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from '@/hooks.ts';
 import { FeedOrders } from '@components/feed-orders/feed-orders.tsx';
 import { FeedStatus } from '@components/feed-status/feed-status.tsx';
 import { wsConnect, wsDisconnect } from '@services/feed/actions.ts';
-import { getLoading, getOrders } from '@services/feed/reducer.ts';
+import { getLoading, getOrders } from '@services/feed/slice.ts';
 import { FEED_URL } from '@services/middleware/socket-middlware.ts';
 
 import styles from './feed-page.module.css';

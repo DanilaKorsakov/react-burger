@@ -6,7 +6,7 @@ import {
 } from '@krgaa/react-developer-burger-ui-components';
 
 import { useSelector } from '@/hooks.ts';
-import { getError } from '@services/user/reducer.ts';
+import { getError } from '@services/user/slice.ts';
 
 import type { ChangeEvent, Ref } from 'react';
 

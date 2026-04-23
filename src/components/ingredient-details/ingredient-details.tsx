@@ -21,7 +21,12 @@ export const IngredientDetails = ({
             alt="ingredient image"
             className={styles.ingredient_image}
           />
-          <div className="text text_type_main-medium mt-6 mb-8">{ingredient.name}</div>
+          <div
+            className="text text_type_main-medium mt-6 mb-8"
+            data-testid="ingredient-details-name"
+          >
+            {ingredient.name}
+          </div>
           <div className={`${styles.ingredient_details} mb-15`}>
             <div
               className={` ${styles.text_center} text text_type_main-default text_color_inactive mr-5`}

@@ -3,7 +3,7 @@ import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useSelector } from '@/hooks.ts';
 import { IngredientList } from '@components/ingredients-list/ingredients-list.tsx';
-import { getIngredients } from '@services/ingredients/reducer.js';
+import { getIngredients } from '@services/ingredients/slice.js';
 
 import type { TIngredient } from '@utils/types.ts';
 
@@ -103,10 +103,16 @@ export const BurgerIngredients = (): React.JSX.Element => {
       <div
         ref={ingredientsScrollRef}
         className={`${styles.ingredients} mt-10 custom-scroll`}
+        data-testid="ingredients-scroll"
       >
-        <IngredientList name="Булки" ingredients={buns} ref={bunRef} />
-        <IngredientList name="Начинки" ingredients={mains} ref={mainRef} />
-        <IngredientList name="Соусы" ingredients={sauces} ref={sauceRef} />
+        <IngredientList name="Булки" ingredients={buns} type={'bun'} ref={bunRef} />
+        <IngredientList name="Начинки" ingredients={mains} type={'main'} ref={mainRef} />
+        <IngredientList
+          name="Соусы"
+          ingredients={sauces}
+          type={'sauce'}
+          ref={sauceRef}
+        />
       </div>
     </section>
   );

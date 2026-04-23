@@ -31,6 +31,7 @@ export async function getIngredients(): Promise<TIngredient[]> {
   const response = await request<TIngredientResponse>(
     `${apiConfig.baseURL}/ingredients`
   );
+
   return response.data;
 }
 

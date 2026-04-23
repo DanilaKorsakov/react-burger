@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from '@/hooks.ts';
 import { UserForm } from '@components/user-form/user-form.tsx';
 import { useFormWithValidation } from '@hooks/use-form-with-validation.tsx';
 import { resetPassword } from '@services/user/actions.ts';
-import { getIsPasswordReset } from '@services/user/reducer.ts';
+import { getIsPasswordReset } from '@services/user/slice.ts';
 
 import type { FormEvent } from 'react';
 

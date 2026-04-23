@@ -11,7 +11,7 @@ import {
   changeIngredientsOrder,
   deleteIngredient,
   revertIngredientPlaces,
-} from '@services/burger-constructor/reducer.ts';
+} from '@services/burger-constructor/slice.ts';
 
 import type { TIngredientWithOrder } from '@utils/types.ts';
 
@@ -68,7 +68,7 @@ export const ConstructorIngredient = ({
   dragRef(constructorIngredientDrop(ref));
 
   return (
-    <div ref={ref}>
+    <div ref={ref} data-testid={`drag-ingredient-${index}`}>
       <DragIcon type="primary" className={styles.icon_drag} />
       <ConstructorElement
         price={ingredient.price}
@@ -77,6 +77,7 @@ export const ConstructorIngredient = ({
         isLocked={false}
         handleClose={function fee() {
           dispatch(deleteIngredient(ingredient.key));
+          dispatch(changeIngredientsOrder());
         }}
         extraClass={`ml-2 mb-4`}
       />

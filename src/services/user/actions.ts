@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { setIsAuthChecked, setUser } from '@services/user/reducer.ts';
+import { setIsAuthChecked, setUser } from '@services/user/slice.ts';
 import {
   register as registerApi,
   login as loginApi,
