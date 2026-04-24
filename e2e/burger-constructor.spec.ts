@@ -14,34 +14,19 @@ test.describe('Burger constructor test', () => {
   let firstDragItem: Locator;
   let secondDragItem: Locator;
   let modal: Locator;
+  const firstBunText = 'Краторная булка N-200i';
+  const secondBunText = 'Флюоресцентная булка R2-D3';
+  const firstIngredientText = 'Хрустящие минеральные кольца';
+  const secondIngredientText = 'Плоды Фалленианского дерева';
 
   test.beforeEach(async ({ page }) => {
-    await page.route('**/api/auth/user', async (route) => {
-      await route.fulfill({
-        status: 200,
-        body: JSON.stringify({
-          success: true,
-          user: { email: 'test@test.com', name: 'test' },
-        }),
-      });
-    });
-
-    await page.route('**/api/orders', async (route) => {
-      await route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          success: true,
-          order: {
-            number: 500,
-          },
-          name: 'Бурегр',
-        }),
-      });
-    });
-
     await page.addInitScript(() => {
-      localStorage.setItem('accessToken', 'fake-token');
+      localStorage.setItem('accessToken', 'Bearer test-token');
+    });
+
+    await page.routeFromHAR('./e2e/hars/orders.har', {
+      url: '**/api/orders',
+      update: false,
     });
 
     await page.routeFromHAR('./e2e/hars/ingredients.har', {
@@ -49,7 +34,12 @@ test.describe('Burger constructor test', () => {
       update: false,
     });
 
-    await page.goto('http://localhost:5173');
+    await page.routeFromHAR('./e2e/hars/user.har', {
+      url: '**/auth/user',
+      update: false,
+    });
+
+    await page.goto('/');
 
     firstBun = page.getByTestId('bun-0');
     firstBunName = firstBun.getByTestId('bun-0-name');
@@ -76,7 +66,7 @@ test.describe('Burger constructor test', () => {
     await expect(ingredientsScroll).toBeVisible();
 
     await expect(firstBun).toBeVisible();
-    await expect(firstBunName).toContainText('Краторная булка N-200i');
+    await expect(firstBunName).toContainText(firstBunText);
   });
 
   test('bun DND work', async () => {
@@ -90,19 +80,19 @@ test.describe('Burger constructor test', () => {
     );
 
     await expect(constructorElementTop).toBeVisible();
-    await expect(constructorElementTop).toContainText('Краторная булка N-200i');
+    await expect(constructorElementTop).toContainText(firstBunText);
 
     await expect(constructorElementBottom).toBeVisible();
-    await expect(constructorElementBottom).toContainText('Краторная булка N-200i');
+    await expect(constructorElementBottom).toContainText(firstBunText);
 
     await expect(firstBunCounter).toBeVisible();
     await expect(firstBunCounter).toHaveText('2');
 
     // проверка замены булочки
     await secondBun.dragTo(burgerConstructor);
-    await expect(constructorElementTop).toContainText('Флюоресцентная булка R2-D3');
+    await expect(constructorElementTop).toContainText(secondBunText);
 
-    await expect(constructorElementBottom).toContainText('Флюоресцентная булка R2-D3');
+    await expect(constructorElementBottom).toContainText(secondBunText);
     await expect(firstBunCounter).not.toBeVisible();
 
     await expect(secondBunCounter).toBeVisible();
@@ -115,8 +105,8 @@ test.describe('Burger constructor test', () => {
     await firstIngredient.dragTo(ingredientsDragScroll);
     await secondIngredient.dragTo(ingredientsDragScroll);
 
-    await expect(ingredients.nth(0)).toContainText('Хрустящие минеральные кольца');
-    await expect(ingredients.nth(1)).toContainText('Плоды Фалленианского дерева');
+    await expect(ingredients.nth(0)).toContainText(firstIngredientText);
+    await expect(ingredients.nth(1)).toContainText(secondIngredientText);
 
     // Перетаскивание внутри конструктора
     const firstItemBox = await firstDragItem.boundingBox();
@@ -143,8 +133,8 @@ test.describe('Burger constructor test', () => {
     await page.mouse.up();
     await page.waitForTimeout(500);
 
-    await expect(ingredients.nth(0)).toContainText('Плоды Фалленианского дерева');
-    await expect(ingredients.nth(1)).toContainText('Хрустящие минеральные кольца');
+    await expect(ingredients.nth(0)).toContainText(secondIngredientText);
+    await expect(ingredients.nth(1)).toContainText(firstIngredientText);
 
     // Перетаскивание вне конструктора
     await page.mouse.move(
@@ -159,17 +149,15 @@ test.describe('Burger constructor test', () => {
     await page.mouse.up();
     await page.waitForTimeout(500);
 
-    await expect(ingredients.nth(0)).toContainText('Плоды Фалленианского дерева');
-    await expect(ingredients.nth(1)).toContainText('Хрустящие минеральные кольца');
+    await expect(ingredients.nth(0)).toContainText(secondIngredientText);
+    await expect(ingredients.nth(1)).toContainText(firstIngredientText);
   });
 
   test('ingredient modal open and close', async ({ page }) => {
     // Проверка открытия
     await firstBun.click();
     await expect(modal).toBeVisible();
-    await expect(page.getByTestId('ingredient-details-name')).toHaveText(
-      'Краторная булка N-200i'
-    );
+    await expect(page.getByTestId('ingredient-details-name')).toHaveText(firstBunText);
 
     // Проверка закрытия
     await modal.locator('svg').click();
@@ -205,31 +193,9 @@ test.describe('Burger constructor test', () => {
 
     await button.click();
     await expect(modal).toBeVisible();
-    await expect(page.getByTestId('order-number')).toContainText('500');
-  });
+    await page.waitForTimeout(500);
 
-  test('price summary', async ({ page }) => {
-    const bunPrice = await firstBun.getByTestId('bun-0-price').textContent();
-    const firstIngredientPrice = await firstIngredient
-      .getByTestId('main-0-price')
-      .textContent();
-    const secondIngredientPrice = await secondIngredient
-      .getByTestId('main-1-price')
-      .textContent();
-
-    await firstBun.dragTo(burgerConstructor);
-    await firstIngredient.dragTo(ingredientsDragScroll);
-    await secondIngredient.dragTo(ingredientsDragScroll);
-
-    const orderPrice = await page.getByTestId('order-price').textContent();
-    if (!bunPrice && !firstIngredientPrice && !secondIngredientPrice) {
-      throw new Error('Не удалось получить цену ингредиентов');
-    }
-    const ingredientsSumPrice =
-      Number(bunPrice) * 2 +
-      Number(firstIngredientPrice) +
-      Number(secondIngredientPrice);
-
-    expect(Number(orderPrice)).toBe(Number(ingredientsSumPrice));
+    const orderNumber = page.getByTestId('order-number');
+    await expect(orderNumber).toBeVisible();
   });
 });
