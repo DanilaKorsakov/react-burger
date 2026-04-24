@@ -7,7 +7,7 @@ import {
 import { type ChangeEvent, useEffect } from 'react';
 
 import { useDispatch, useSelector } from '@/hooks.ts';
-import { getError, getLoading, setError } from '@services/user/reducer.ts';
+import { getError, getLoading, setError } from '@services/user/slice.ts';
 
 import styles from './user-form.module.css';
 

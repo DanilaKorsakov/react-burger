@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useSelector } from '@/hooks.ts';
-import { getIngredients } from '@services/ingredients/reducer.js';
+import { getIngredients } from '@services/ingredients/slice.js';
 
 import type { TIngredient } from '@utils/types.ts';
 

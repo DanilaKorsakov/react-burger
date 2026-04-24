@@ -4,15 +4,19 @@ import { useLocation } from 'react-router-dom';
 
 import { useSelector } from '@/hooks.ts';
 import { IngredientUi } from '@components/ui/ingredient-ui/ingredient-ui.tsx';
-import { getBun, getPickedIngredients } from '@services/burger-constructor/reducer.ts';
+import { getBun, getPickedIngredients } from '@services/burger-constructor/slice.ts';
 
 import type { TIngredient } from '@utils/types.ts';
 
 type IngredientProps = {
   ingredient: TIngredient;
+  index: number;
 };
 
-export const Ingredient = ({ ingredient }: IngredientProps): React.JSX.Element => {
+export const Ingredient = ({
+  ingredient,
+  index,
+}: IngredientProps): React.JSX.Element => {
   const pickedIngredients = useSelector(getPickedIngredients);
   const bun = useSelector(getBun);
   const [count, setCount] = useState(0);
@@ -43,6 +47,8 @@ export const Ingredient = ({ ingredient }: IngredientProps): React.JSX.Element =
       price={ingredient.price}
       image={ingredient.image}
       id={ingredient._id}
+      index={index}
+      type={ingredient.type}
     />
   );
 };

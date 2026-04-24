@@ -17,7 +17,7 @@
 }
 
 .ingredient_substrate {
-  display: flex;
+  display: flex !important;
   justify-content: center;
   align-items: center;
   max-height: 80px;

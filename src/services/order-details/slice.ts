@@ -9,7 +9,7 @@ type TOrderDetails = {
   loading: boolean;
 } & TOrder;
 
-const initialState: TOrderDetails = {
+export const initialState: TOrderDetails = {
   name: '',
   order: {
     number: null,

@@ -2,7 +2,7 @@ import { Preloader } from '@krgaa/react-developer-burger-ui-components';
 
 import { useSelector } from '@/hooks.ts';
 import { useGetOrderDetails } from '@hooks/use-get-order-details.js';
-import { getOrderError, getOrderLoading } from '@services/order-details/reducer.js';
+import { getOrderError, getOrderLoading } from '@services/order-details/slice.js';
 
 import iconPath from '../../assets/images/success.svg';
 
@@ -26,7 +26,10 @@ export const OrderDetails = (): React.JSX.Element => {
       ) : (
         order && (
           <>
-            <div className={` ${styles.blur} text text_type_digits-large mt-30`}>
+            <div
+              className={` ${styles.blur} text text_type_digits-large mt-30`}
+              data-testid="order-number"
+            >
               {order.number}
             </div>
             <div className="text text_type_main-medium mt-8">идентификатор заказа</div>

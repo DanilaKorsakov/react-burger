@@ -7,5 +7,5 @@ type ModalOverlayProps = {
 };
 
 export const ModalOverlay = ({ ref }: ModalOverlayProps): React.JSX.Element => {
-  return <div ref={ref} className={styles.overlay}></div>;
+  return <div data-testid="modal-overlay" ref={ref} className={styles.overlay}></div>;
 };

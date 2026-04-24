@@ -12,7 +12,7 @@ import {
   addIngredient,
   getBun,
   getPickedIngredients,
-} from '@services/burger-constructor/reducer.js';
+} from '@services/burger-constructor/slice.js';
 
 import type { TIngredient } from '@utils/types.ts';
 
@@ -74,7 +74,10 @@ export const BurgerConstructor = (): React.JSX.Element => {
   }
 
   return (
-    <section className={`${styles.burger_constructor} ml-10`}>
+    <section
+      data-testid="burger-constructor"
+      className={`${styles.burger_constructor} ml-10`}
+    >
       <div ref={bunRef} className="ml-4">
         {bun ? (
           <ConstructorElement
@@ -93,7 +96,11 @@ export const BurgerConstructor = (): React.JSX.Element => {
             Выберите булки
           </div>
         )}
-        <div ref={ingredientRef} className={`${styles.ingredients} custom-scroll`}>
+        <div
+          ref={ingredientRef}
+          data-testid="ingredients-drag-scroll"
+          className={`${styles.ingredients} custom-scroll`}
+        >
           {ingredients.length > 0 ? (
             <ul className={`${styles.ingredientsList}`}>
               {ingredients.map((ingredient, index) => (

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from '@/hooks.ts';
 import { UserProfileForm } from '@components/user-profile-form/user-profile-form.tsx';
 import { useFormWithValidation } from '@hooks/use-form-with-validation.tsx';
 import { changeUserData } from '@services/user/actions.ts';
-import { getUserData } from '@services/user/reducer.ts';
+import { getUserData } from '@services/user/slice.ts';
 
 import type { TProfileFormValues } from '@utils/types.ts';
 

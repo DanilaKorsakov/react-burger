@@ -1,6 +1,6 @@
 import { useSelector } from '@/hooks.ts';
 import { UseFeedOrders } from '@hooks/use-feed-orders.tsx';
-import { getOrders } from '@services/feed/reducer.ts';
+import { getOrders } from '@services/feed/slice.ts';
 
 import styles from './feed-status.module.css';
 

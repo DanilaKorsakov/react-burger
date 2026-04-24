@@ -36,3 +36,4 @@
 		'@utils': path.resolve(__dirname, './src/utils'),
 	},
 ```
+Ссылка на задеплоенный проект: https://www.stellar-burgers-project.ru

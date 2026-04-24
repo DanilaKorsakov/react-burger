@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useSelector } from '@/hooks.ts';
-import { getOrders } from '@services/feed/reducer.ts';
+import { getOrders } from '@services/feed/slice.ts';
 import { getOrder } from '@utils/api.ts';
 
 import type { TFeedOrder } from '@utils/types.ts';

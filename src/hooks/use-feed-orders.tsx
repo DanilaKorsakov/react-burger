@@ -1,5 +1,5 @@
 import { useSelector } from '@/hooks.ts';
-import { getOrders } from '@services/feed/reducer.ts';
+import { getOrders } from '@services/feed/slice.ts';
 
 type UseFeedOrders = {
   doneOrders: number[];
